@@ -1,0 +1,59 @@
+{
+    "projectName":       "Releases",
+    "branch":            "master",
+    "bugs":              "",
+    "buildCommand": [
+        "cmd /c 7za.exe a -r -tzip -xr!*.md -xr!.publishrc.json install\\dist\\Releases.zip *.*"
+    ],
+    "changelogFile":     "CHANGELOG.md",
+    "deployCommand":     "",
+    "distRelease":       "N",
+    "distReleasePath":   "",
+    "distDocPath":       "",
+    "dryRunVcRevert":    "Y",
+    "emailNotification": "N",
+    "emailServer":       "smtp-relay.gmail.com",
+    "emailMode":         "tls",
+    "emailPort":         465,
+    "emailRecip":        "spmeesseman@gmail.com",
+    "emailSender":       "bot@spmeesseman.com",
+    "githubRelease":     "Y",
+    "githubAssets": [
+        "build\\Releases.zip"
+    ],
+    "githubUser":        "spmeesseman",
+    "historyFile":       "",
+    "historyHdrFile":    "",
+    "historyLineLen":    80,
+    "homePage":          "",
+    "interactive":       "Y",
+    "mantisbtPlugin":    "Y",
+    "mantisbtRelease":   "N",
+    "mantisbtUrl":       "http://app1.spmeesseman.com/projects",
+    "mantisbtAssets": [
+        "build\\Releases.zip|Zip Archive"
+    ],
+    "npmPackDist":       "N",
+    "npmRegistry":       "",
+    "npmRelease":        "N",
+    "npmScope":          "",
+    "nugetRelease":      "N",
+    "pathToDist":        "",
+    "pathtoRoot":        ".",
+    "pathtoMainRoot":    "",
+    "pathPreRoot":       "",
+    "postBuildCommand":  "",
+    "repoType":          "",
+    "repo":              "",
+    "skipCommit":        "N",
+    "skipDeployPush":    "N",
+    "testEmailRecip":    "spmeesseman@gmail.com",
+    "textEditor":        "notepad",
+    "vcTag":             "Y",
+    "vcTagPrefix":       "",
+    "versionFiles": [
+        "Releases.php"
+    ],
+    "versionText":       "Version",
+    "writeLog":          "N"   
+}
