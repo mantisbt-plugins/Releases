@@ -11,7 +11,7 @@
         "cmd /c xcopy templates\\* build\\Releases\\templates /s /i /y",
         "cmd /c copy /Y LICENSE.txt build\\Releases",
         "cmd /c copy /Y Releases.php build\\Releases",
-        "Compress-Archive -Path build\\Releases -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
+        "Compress-Archive -Path build\\Releases -Update -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
         "cmd /c rmdir /S /Q build\\Releases"
     ],
     "changelogFile":     "CHANGELOG.md",
