@@ -3,8 +3,16 @@
     "branch":            "master",
     "bugs":              "",
     "buildCommand": [
-        "cmd /c mkdir build",
-        "Compress-Archive -Path api, core, files, lang, pages, templates, LICENSE.txt, Releases.php -CompressionLevel Optimal -DestinationPath build\\Releases.zip"
+        "cmd /c xcopy api\\* build\\Releases\\api /s /i /y",
+        "cmd /c xcopy core\\* build\\Releases\\core /s /i /y",
+        "cmd /c xcopy files\\* build\\Releases\\files /s /i /y",
+        "cmd /c xcopy lang\\* build\\Releases\\lang /s /i /y",
+        "cmd /c xcopy pages\\* build\\Releases\\pages /s /i /y",
+        "cmd /c xcopy templates\\* build\\Releases\\templates /s /i /y",
+        "cmd /c copy /Y LICENSE.txt build\\Releases",
+        "cmd /c copy /Y Releases.php build\\Releases",
+        "Compress-Archive -Path build\\Releases -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
+        "cmd /c rmdir /S /Q build\\Releases"
     ],
     "changelogFile":     "CHANGELOG.md",
     "deployCommand":     "",
@@ -13,11 +21,11 @@
     "distDocPath":       "",
     "dryRunVcRevert":    "Y",
     "emailNotification": "N",
-    "emailServer":       "smtp-relay.gmail.com",
+    "emailServer":       "",
     "emailMode":         "tls",
     "emailPort":         465,
-    "emailRecip":        "spmeesseman@gmail.com",
-    "emailSender":       "bot@spmeesseman.com",
+    "emailRecip":        "",
+    "emailSender":       "",
     "githubRelease":     "Y",
     "githubAssets": [
         "build\\Releases.zip"
