@@ -1,0 +1,20 @@
+
+POST https://my.domain.com/mantistbt/plugins/Releases/api/releases
+Authorization: ***************************
+content-type: application/json
+
+{
+    "name": "Version 1.6.11",
+    "tag": "v1.6.11",
+    "desc": "Changelog: This test uses the VSCode extension Rest Client by Hiachao Mao",
+    "files": [
+    "assets": [
+    {
+        "name": "package.txt",
+        "data": "VGVzdCB0ZXN0"
+    },
+    {
+        "name": "package2.txt",
+        "data": "VGVzdCB0ZXN0IHRlc3QgdGVzdA=="
+    }]
+}

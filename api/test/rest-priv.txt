@@ -1,0 +1,25 @@
+
+POST https://app1.development.pjats.com/projects/plugins/Releases/api/releases/GEMS2
+Authorization: LnhWlt3_e0dNkBDI9zfRphTzaM4a0y8P
+content-type: application/json
+
+{
+    "tag": "v1.6.11",
+    "version": "1.6.11",
+    "dryrun": true,
+    "notes": "Changelog: This test uses the VSCode extension Rest Client by Hiachao Mao",
+    "notesismd": true,
+    "assets": [
+    {
+        "name": "package1.txt",
+        "desc": "Test file 1",
+        "type": "text/plain",
+        "data": "VGVzdCB0ZXN0"
+    },
+    {
+        "name": "package2.txt",
+        "desc": "Test file 2",
+        "type": "text/plain",
+        "data": "VGVzdCB0ZXN0IHRlc3QgdGVzdA=="
+    }]
+}

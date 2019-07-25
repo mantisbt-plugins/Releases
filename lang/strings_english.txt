@@ -1,0 +1,57 @@
+<?php
+
+# Copyright (c) 2019 Scott Meesseman
+# Licensed under the Apache license
+
+$s_plugin_Releases_ = '';
+$s_plugin_Releases_title = 'Releases';
+$s_plugin_Releases_description = 'Release Management by Version';
+
+/* Display page */
+
+$s_plugin_Releases_display_page_title = 'Releases';
+$s_plugin_Releases_upload_title = 'Upload File(s)';
+$s_plugin_Releases_file_count = 'Number of Files to Upload';
+
+/* Configuration page */
+
+$s_plugin_Releases_configuration_page_title = 'Releases Plugin Configuration';
+$s_plugin_Releases_configuration_for_project = 'Project %%project%% - Releases configuration';
+$s_plugin_Releases_view_access_level = 'View Access Level';
+$s_plugin_Releases_download_access_level = 'Download Access Level';
+$s_plugin_Releases_upload_access_level = 'Upload Access Level';
+$s_plugin_Releases_upload_method = 'Upload Method';
+$s_plugin_Releases_uploaded_by = 'Uploaded by';
+$s_plugin_Releases_method_disk = 'Disk';
+$s_plugin_Releases_method_database = 'Database';
+$s_plugin_Releases_method_ftp = 'FTP';
+$s_plugin_Releases_disk_path = 'Disk Directory (only if upload method is Disk)';
+$s_plugin_Releases_ftp_server = 'FTP Server (only if upload method is FTP)';
+$s_plugin_Releases_ftp_user = 'FTP User (only if upload method is FTP)';
+$s_plugin_Releases_ftp_pass = 'FTP Password (only if upload method is FTP)';
+$s_plugin_Releases_notification_enable = 'Enable email notification';
+$s_plugin_Releases_notify_handler = 'Notify Handler';
+$s_plugin_Releases_notify_reporter = 'Notify Reporter';
+$s_plugin_Releases_notify_email = 'Emails (separated by \',\')';
+$s_plugin_Releases_email_template = 'Email Template';
+$s_plugin_Releases_email_subject = 'Email Subject';
+$s_plugin_Releases_download_requires_login = 'Require Login for Download';
+$s_plugin_Releases_max_file_ini_upload = 'upload_max_size in php.ini';
+$s_plugin_Releases_max_file_ini_post   = 'post_max_size in php.ini';
+$s_plugin_Releases_max_file_mantis_cfg = 'Mantis max_file_size';
+
+
+/* Releases page */
+$s_plugin_Releases_confirm_delete_file = 'Are you sure you want delete this file?';
+$s_plugin_Releases_confirm_delete_version = 'Are you sure you want delete this version/release?';
+$s_plugin_Releases_disable_link = 'Disable';
+$s_plugin_Releases_enable_link = 'Enable';
+$s_plugin_Releases_release_description = 'Release Description';
+$s_plugin_Releases_overwrites_release_descrip = 'Will overwrite an existing description<br>if not left blank';
+
+/* Help link */
+
+$s_plugin_Releases_email_subject_help = 'You can specify the subject of the email. To do that you can use the following shortcut:<ul><li><b>**</b>: *</li><li><b>*c</b>: Number of file added</li><li><b>*p</b>: The project name</li><li><b>*v</b>: The project version.</li></ul>';
+
+/* Error messages */
+$MANTIS_ERROR[ERROR_FILE_NOT_FOUND] = 'File not found.';

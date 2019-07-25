@@ -1,0 +1,38 @@
+.releases-disabled-file {
+    color: gray;
+}
+
+.releases-enabled-file {
+}
+
+.changelog-table td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.changelog-table tr {
+    display: tr;
+    border-collapse: separate;                 
+    border-style: solid;
+    border-color: rgb(211, 208, 208);
+    border-width: 0px;
+    border-spacing: 2px;
+    border-bottom-width: 1px !important;
+}
+
+.asset-table table {
+    display: table;
+    border-collapse: separate;                 
+    border-style: solid;
+    border-color: rgb(211, 208, 208);
+    border-width: 0px;
+    border-spacing: 4px;
+    border-bottom-width: 1px !important;
+}
+
+.releases-avatar-30 {
+    border-radius: 15% !important;
+    border-width: 2px !important;
+    border-style: solid;
+    border-color: #5090c1;
+}
