@@ -114,14 +114,14 @@ foreach ($t_releases as $t_release)
             echo '</a></td>';
 
             $t_version_id = $t_release['id'];
-            if (plugin_is_installed("GanttChart"))
+            if (plugin_is_installed("GanttChart2"))
             {
                 if (plugin_is_installed("IFramed"))
                 {
-                    echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="plugin.php?page=IFramed/main&title=Gantt%20Chart&url=' . urlencode(plugin_page( 'summary_gantt_chart.php', false, "GanttChart" ) . "&project_id=$t_prj_id&version_id=$t_version_id&v_str=fixed_in_version&inherited=") . "\">" . plugin_lang_get( 'gantt_bug_page_link', 'GanttChart' ) . '</a></td>';
+                    echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="plugin.php?page=IFramed/main&title=Gantt%20Chart&url=' . urlencode(plugin_page( 'summary_gantt_chart.php', false, "GanttChart2" ) . "&project_id=$t_prj_id&version_id=$t_version_id&v_str=fixed_in_version&inherited=") . "\">" . plugin_lang_get( 'gantt_bug_page_link', 'GanttChart2' ) . '</a></td>';
                 }
                 else {
-                    echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="' . plugin_page( 'summary_gantt_chart.php', false, "GanttChart" ) . "&project_id=$t_prj_id&version_id=$t_version_id&v_str=fixed_in_version&inherited=\">" . plugin_lang_get( 'gantt_bug_page_link', 'GanttChart' ) . "</a></td>";
+                    echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="' . plugin_page( 'summary_gantt_chart.php', false, "GanttChart2" ) . "&project_id=$t_prj_id&version_id=$t_version_id&v_str=fixed_in_version&inherited=\">" . plugin_lang_get( 'gantt_bug_page_link', 'GanttChart2' ) . "</a></td>";
                 }
             }
 
