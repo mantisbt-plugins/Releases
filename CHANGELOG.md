@@ -1,5 +1,15 @@
 # RELEASES CHANGE LOG
 
+## Version 1.0.2 (July 26th, 2019)
+
+### Documentation
+
+- **readme:** update installation section and issues badge links
+
+### Bug Fixes
+
+- automatically generated bug links in changelog are missing the last digit in the bug id.
+
 ## Version 1.0.1 (July 25th, 2019)
 
 ### Bug Fixes
