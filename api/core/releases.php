@@ -280,8 +280,7 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 	foreach( $t_matches_all[0] as $t_substring ) {
 		$value = $t_substring;
 		$vi1 = strpos($value, "#");
-		$vi2 = strlen($value) - 1;
-		$bugid = substr($value, $vi1, $vi2 - $vi1);
+		$bugid = substr($value, $vi1, strlen($value) - $vi1);
 		$bugids = explode(",", $bugid);
 		for ($i = 0; $i < count($bugids); $i++) {
 			$bid = str_replace("&nbsp;", "", $bugids[$i]); # with # i.e. #1919
