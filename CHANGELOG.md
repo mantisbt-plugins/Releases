@@ -1,5 +1,15 @@
 # RELEASES CHANGE LOG
 
+## Version 1.0.3 (July 27th, 2019)
+
+### Build System
+
+- **app-publisher:** set interactive flag to N for non-interactive setting of new version during publish run (compliments of ap v1.10.4 update)
+
+### Miscellaneous
+
+- Update license to GPLv3
+
 ## Version 1.0.2 (July 26th, 2019)
 
 ### Documentation
