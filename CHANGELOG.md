@@ -1,5 +1,11 @@
 # RELEASES CHANGE LOG
 
+## Version 1.0.4 (July 27th, 2019)
+
+### Code Refactoring
+
+- update to MIT license
+
 ## Version 1.0.3 (July 27th, 2019)
 
 ### Build System
