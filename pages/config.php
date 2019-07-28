@@ -53,7 +53,7 @@ $t_project_id = helper_get_current_project();
           <span class="required">*</span><?php echo plugin_lang_get( 'download_access_level' ); ?>
         </td>
         <td width="70%">
-          <select name="view_access_level">
+          <select name="download_access_level">
             <?php print_enum_string_option_list( 'access_levels', plugin_config_get( 'download_threshold_level', PLUGINS_RELEASES_VIEW_THRESHOLD_LEVEL_DEFAULT ) ); ?>
           </select>
         </td>
