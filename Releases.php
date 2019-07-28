@@ -11,7 +11,7 @@ class ReleasesPlugin extends MantisPlugin
         $this->description = plugin_lang_get("description");
         $this->page = 'config';
 
-        $this->version = "1.0.4";
+        $this->version = "1.0.5";
         $this->requires = array(
             "MantisCore" => "2.0.0",
         );

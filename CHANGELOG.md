@@ -1,5 +1,11 @@
 # RELEASES CHANGE LOG
 
+## Version 1.0.5 (July 27th, 2019)
+
+### Bug Fixes
+
+- cannot save config settings - missing parameter download_threshhold
+
 ## Version 1.0.4 (July 27th, 2019)
 
 ### Code Refactoring
