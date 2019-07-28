@@ -37,10 +37,11 @@
     "homePage":          "",
     "interactive":       "N",
     "mantisbtPlugin":    "Releases.php",
-    "mantisbtRelease":   "N",
-    "mantisbtUrl":       "http://app1.spmeesseman.com/projects",
+    "mantisbtRelease":   "Y",
+    "mantisbtUrl":       "https://app1.spmeesseman.com/projects",
+    "mantisbtApiToken":  "${MANTIS_API_TOKEN}",
     "mantisbtAssets": [
-        "build\\Releases.zip|Zip Archive"
+        "build\\Releases.zip|Release Zip Archive"
     ],
     "npmPackDist":       "N",
     "npmRegistry":       "",
