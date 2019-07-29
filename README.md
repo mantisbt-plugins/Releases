@@ -1,4 +1,4 @@
-# Release Management MantisBT Plugin
+# Releases MantisBT Plugin
 
 [![app-type](https://img.shields.io/badge/category-mantisbt%20plugins-blue.svg)](https://github.com/spmeesseman)
 [![app-lang](https://img.shields.io/badge/language-php-blue.svg)](https://github.com/spmeesseman)
@@ -7,6 +7,8 @@
 [![authors](https://img.shields.io/badge/authors-scott%20meesseman%20--%20vincent%20debout--%20jiri%20hron-6F02B5.svg?logo=visual%20studio%20code)](https://github.com/spmeesseman)
 [![GitHub issues open](https://img.shields.io/github/issues-raw/spmeesseman/Releases.svg?maxAge=2592000&logo=github)](https://github.com/spmeesseman/Releases/issues)
 [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/spmeesseman/Releases.svg?maxAge=2592000&logo=github)](https://github.com/spmeesseman/Releases/issues)
+[![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects)
+[![MantisBT version next](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/next)](https://app1.spmeesseman.com/projects)
 
 - [Release Management MantisBT Plugin](#Release-Management-MantisBT-Plugin)
   - [Description](#Description)
@@ -36,7 +38,7 @@ Extract the release archive to the MantisBT installations plugins folder:
     unzip Releases.zip
     rm -f Releases.zip
 
-Ensure to use the latest released version number in the download url.
+Ensure to use the latest released version number in the download url: [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects)
 
 Install the plugin using the default installation procedure for a MantisBT plugin in `Manage -> Plugins`.
 
