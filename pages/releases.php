@@ -128,6 +128,7 @@ foreach ($t_releases as $t_release)
             echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="#releases_upload"> ' . plugin_lang_get('upload_title') . ' </a></td>';
 
             if ($t_user_has_upload_level) {
+                echo '<td width="30"><a class="btn btn-xs btn-primary btn-white btn-round" href="' . plugin_page('releases') . '&edit=true&version=' . $t_release['version'] . '&release=true&id=' . $t_row['id'] . '&changelog=' . urlencode($t_row['description']) . '#releases_upload" title=" ' . lang_get('edit_link') . '">' . lang_get('edit_link') . '</a></td>';
                 echo '<td width="60"><a class="btn btn-xs btn-primary btn-white btn-round version_delete" href="' . plugin_page('delete') . '&release=true&id=' . $t_row['id'] . '" title=" ' . lang_get('delete_link') . '">' . lang_get('delete_link') . '</a></td>';
             }
 
@@ -205,6 +206,8 @@ foreach ($t_releases as $t_release)
 
 if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS) 
 {
+    $t_edit = gpc_get_string('edit', 'false');
+    $t_edit_version = gpc_get_string('version', '');
     //$t_max_file_size = (int)min( ini_get_number( 'upload_max_filesize' ), ini_get_number( 'post_max_size' ), config_get( 'max_file_size' ) );
     $t_max_file_size = releases_max_upload_size()[0];
     echo '<br /><hr />' . "\n";
@@ -215,6 +218,7 @@ if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS)
         <input type="hidden" name="plugin" value="Releases" />
         <input type="hidden" name="display" value="upload" />
         <input type="hidden" name="max_file_size" value="<?php echo $t_max_file_size ?>" />
+        <input type="hidden" name="version" value="<?php echo $t_edit_version ?>" />
         <table class="width100 table table-striped table-bordered table-condensed" cellspacing="1">
             <tr class="row-1">
                 <td class="category" width="15%">
@@ -222,8 +226,14 @@ if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS)
                 </td>
                 <td width="85%">
                     <select name="release">
-                        <?php foreach ($t_releases as $t_release) {
-                            echo '<option value="' . $t_release['id'] . '">' . $t_release['version'] . '</option>';
+                        <?php foreach ($t_releases as $t_release) 
+                        {
+                            if ($t_edit === 'true' && $t_release['version'] === $t_edit_version) {
+                                echo '<option selected value="' . $t_release['id'] . '">' . $t_release['version'] . '</option>';
+                            }
+                            else {
+                                echo '<option value="' . $t_release['id'] . '">' . $t_release['version'] . '</option>';
+                            }
                         } ?>
                     </select>
                 </td>
@@ -259,7 +269,7 @@ if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS)
                     <?php echo plugin_lang_get('release_description') . '<br /><span class="small">' . plugin_lang_get('overwrites_release_descrip') . '</span>' ?>
                 </td>
                 <td width="85%">
-                    <textarea class="form-control" name="description" rows="10" style="width:100% !important;"></textarea>
+                    <textarea class="form-control" name="description" rows="10" style="width:100% !important;"><?php echo urldecode(gpc_get_string('changelog', '')) ?></textarea>
                 </td>
             </tr>
             <tr>
@@ -270,8 +280,10 @@ if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS)
                 </td>
             </tr>
         </table>
-        <input type="submit" class="button" value="<?php echo lang_get('upload_files_button') ?>" />
+        <input type="submit" class="button" value="<?php echo lang_get('save') . ' / ' . lang_get('upload_files_button') ?>" />
+
         <script src="<?php echo plugin_file('releases.js') ?>"></script>
+        
     </form>
 
 <?php

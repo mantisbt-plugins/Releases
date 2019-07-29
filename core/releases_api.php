@@ -323,6 +323,6 @@ echo "DBG: 0:0, $t_method, FTP<BR>\n";
  * Retaken function form print_api.php but it prints redirection message everytime
  * @param type $p_redirect_to
  */
-function release_mgt_successful_redirect($p_redirect_to) {
-    print_successful_redirect(plugin_page($p_redirect_to, true));
+function release_mgt_successful_redirect($p_redirect_to, $p_version = "") {
+    print_successful_redirect(plugin_page($p_redirect_to, true) . ($p_version != "" ? "#release_app-publisher_$p_version" : ""));
 }

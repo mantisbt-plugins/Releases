@@ -12,7 +12,8 @@ for($i=0; $i<$t_file_count; $i++) {
     $t_file[$i] = gpc_get_file('file_' . $i);
     $t_description[$i] = gpc_get_string('description_' . $i, '');
 }
-$t_version = gpc_get_int('release', 0);
+$t_version = gpc_get_string('version', '');
+$t_version_id = gpc_get_int('release', 0);
 $t_notes = gpc_get_string('description', '');
 
 $t_current_user_id = auth_get_current_user_id();
@@ -31,7 +32,7 @@ $dbTable = plugin_table('release');
 # If it doesnt, then create it, if it does, get the release id, we will still add assets
 # to the existing release next
 #
-$query = "SELECT COUNT(*) FROM $dbTable WHERE version_id=".$t_version;
+$query = "SELECT COUNT(*) FROM $dbTable WHERE version_id=".$t_version_id;
 $result = db_query($query);
 $rowCount = db_result($result);
 
@@ -43,28 +44,28 @@ if ($rowCount < 1)
     $query = "INSERT INTO $dbTable
                 (project_id, version_id, title, description, date_created, user)
                 VALUES
-                (".$t_project_id.", ".$t_version.", '', '
+                (".$t_project_id.", ".$t_version_id.", '', '
                 ".db_prepare_string($t_notes)."', '".date("Y-m-d H:i:s")."', '".$current_user."')";
     db_query($query);
     $release_id = db_insert_id($dbTable);
 }
 elseif (!empty($t_notes))
 {
-    $query = "UPDATE $dbTable SET description='" . db_prepare_string($t_notes) . "' WHERE version_id=" . $t_version;
+    $query = "UPDATE $dbTable SET description='" . db_prepare_string($t_notes) . "' WHERE version_id=" . $t_version_id;
     db_query($query);
 }
     
 for($i=0; $i < $t_file_count; $i++) 
 {
-    if (isset($t_file[$i]) && isset($t_file[$i]['tmp_name']))
+    if (isset($t_file[$i]) && isset($t_file[$i]['tmp_name']) && !isset($t_file[$i]['error']))
     {
-        $t_file_error[$i] = isset($t_file[$i]['error']) ? $t_file[$i]['error'] : 0;
-        $t_file_id[$i] = plugins_releases_file_add($t_file[$i]['tmp_name'], $t_file[$i]['name'], $t_file[$i]['type'], $t_project_id, $t_version, 0, $t_description[$i], $t_file_error[$i]);
+        #$t_file_error[$i] = isset($t_file[$i]['error']) ? $t_file[$i]['error'] : 0;
+        $t_file_id[$i] = plugins_releases_file_add($t_file[$i]['tmp_name'], $t_file[$i]['name'], $t_file[$i]['type'], $t_project_id, $t_version_id, 0, $t_description[$i], $t_file_error[$i]);
     }
 }
 
 if (plugin_config_get('notification_enable', PLUGINS_RELEASES_NOTIFICATION_ENABLE_DEFAULT) == ON) {
-    releases_plugin_send_email($t_project_id, $t_version, $t_file, $t_description, $t_file_id);
+    releases_plugin_send_email($t_project_id, $t_version_id, $t_file, $t_description, $t_file_id);
 }
 
-release_mgt_successful_redirect('releases');
+release_mgt_successful_redirect('releases', $t_version);
