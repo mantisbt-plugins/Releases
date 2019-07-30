@@ -67,7 +67,7 @@ Not supported in v1.x
 
 ### POST: /plugins/Releases/api/releases/{project}
 
-Creates the specified version if it does not already exists.  Assets are attached to created or pre-existing releases.  The "release" is unique to the "version", each release can have only one version and vice versa.  "{project}" is the MantisBT project name, case sensitive.
+Creates the specified version if it does not already exists.  Assets are attached to created or pre-existing releases.  The "release" is unique to the "version", each release can have only one version and vice versa.  The url part "{project}" is the MantisBT project name, case sensitive.
 
 Request Parameters
 
@@ -87,6 +87,8 @@ File asset parameters
 |data|The file data, base64 encoded|string|||yes|
 |desc|The file description|string|||no|
 |type|The mime type of the file|string|Valid mime type|application/octet-stream|no|
+
+The `mime-type`, if not provided by the client, will be determined by the plugin.  If a mime type cannot be found, `application/octet-stream` will be used.
 
 Example JSON Request Body
 
