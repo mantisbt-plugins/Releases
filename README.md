@@ -71,7 +71,7 @@ Creates the specified version if it does not already exists.  Assets are attache
 
 **Request Parameters**
 |Name|Description|Type|Possible Values|Default Value|Required|
-|-|-|-|-|-|
+|-|-|-|-|-|-|
 |version|The version string i.e. `1.5.14` or `2.1.21`|string|||yes|
 |notes|The version notes, or changelog.  Can be text, html, or markup|string|||no|
 |notesismd|Set this flag to `1` if the notes field contains markdown|enum|0, 1|0|no|
@@ -79,12 +79,12 @@ Creates the specified version if it does not already exists.  Assets are attache
 |dryrun|Set this flag to `1` to perform a dry run only|enum|0, 1|0|no|
 
 **File asset parameters**
-|Name|Description|Type|Default|Required|
-|-|-|-|-|-|
+|Name|Description|Type|Possible Values|Default Value|Required|
+|-|-|-|-|-|-|
 |name|The file name|string|||yes|
 |data|The file data, base64 encoded|string|||yes|
 |desc|The file description|string|||no|
-|type|The mime type of the file|string|||no|
+|type|The mime type of the file|string|Valid mime type|application/octet-stream|no|
 
 Example JSON Request Body
 
