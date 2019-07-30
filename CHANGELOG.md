@@ -1,5 +1,17 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.1 (July 29th, 2019)
+
+### Documentation
+
+- **README:** update info
+
+### Bug Fixes
+
+- **releases:** error encountered when clicking Edit to edit a release if changelog exceeds 8192 bytes (Apache specific).
+
+	The changelog was previously encoded and included as a GET parameter.This param has been eliminated.
+
 ## Version 1.1.0 (July 29th, 2019)
 
 ### Build System
