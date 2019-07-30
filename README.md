@@ -25,7 +25,7 @@
 
 ## Description
 
-This plugin is a continuation of the legacy `releasemgt` plugin.  It allows user to store releases composed of a changelog and assets (file downloads).  There have been several visual improvements and bug fixes, as well as a new REST API to create releases and upload assets.
+This plugin is a continuation of the legacy `releasemgt` plugin.  It allows user to store releases composed of a changelog and assets (file downloads).  There have been several visual improvements and bug fixes, as well as a new REST API to create releases and upload changelogs with assets.
 
 This plugin was developed and tested on MantisBT 2.21.1.
 
@@ -38,7 +38,7 @@ Extract the release archive to the MantisBT installations plugins folder:
     unzip Releases.zip
     rm -f Releases.zip
 
-Ensure to use the latest released version number in the download url: [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects)
+Ensure to use the latest released version number in the download url: [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects) (version badge available via the [ApiExtend Plugin](https://github.com/spmeesseman/ApiExtend))
 
 Install the plugin using the default installation procedure for a MantisBT plugin in `Manage -> Plugins`.
 
@@ -52,34 +52,41 @@ For Apache configuration, see the example Location directive found in api/apache
 
 ## REST API
 
-The `Authorization` header value must be set to the API token for authentication in all requests.  The token can be sreated in User Preferences for the user that will be used to make the requests under.
+This plugin exposes a REST API for creating/uploading releases.  The `Authorization` header value must be set to the API token for authentication in all requests.  The token can be sreated in User Preferences for the user that will be used to make the requests under.
 
-For example:
+Example header:
 
+    Content-Type = application/json; charset=UTF-8
     Authorization: DvhKlx9_g5dNkBEI4jqVmwAxaN9a1y3P
 
-The following endpoints are available to automatically create/update releases with assets/files:
+The following endpoints are available:
 
 ### GET: /plugins/Releases/api/releases/{project}/{id}
 
-Example Response Body
-
-    {
-        "id" 1,
-        "title": "ProjectName - Version 1.4.3",
-        "notes": ".......",
-        "assets": [
-        {
-            "name": "package.json",
-            "data": "VGVzdCB0ZXN....0IHRlc3QgdGVzdA=="
-        }]
-    }
+Not supported in v1.x
 
 ### POST: /plugins/Releases/api/releases/{project}
 
 Creates the specified version if it does not already exists.  Assets are attached to created or pre-existing releases.  The "release" is unique to the "version", each release can have only one version and vice versa.  "{project}" is the MantisBT project name, case sensitive.
 
-Example Request Body
+**Request Parameters**
+|Name|Description|Type|Possible Values|Default Value|Required|
+|-|-|-|-|-|
+|version|The version string i.e. `1.5.14` or `2.1.21`|string|||yes|
+|notes|The version notes, or changelog.  Can be text, html, or markup|string|||no|
+|notesismd|Set this flag to `1` if the notes field contains markdown|enum|0, 1|0|no|
+|assets|File assets|array(object)|||no|
+|dryrun|Set this flag to `1` to perform a dry run only|enum|0, 1|0|no|
+
+**File asset parameters**
+|Name|Description|Type|Default|Required|
+|-|-|-|-|-|
+|name|The file name|string|||yes|
+|data|The file data, base64 encoded|string|||yes|
+|desc|The file description|string|||no|
+|type|The mime type of the file|string|||no|
+
+Example JSON Request Body
 
     {
         "version": "1.4.3",
@@ -100,17 +107,11 @@ Example Response Body
 
 ### PUT: /plugins/Releases/api/releases/{project}/{id}
 
-Not supported in v1.0.0-alpha
+Not supported in v1.x
 
 ### DELETE: /plugins/Releases/api/releases/{project}/{id}
 
-Not supported in v1.0.0-alpha
-
-## Future Maybes
-
-- Edit Asset / addt button
-- Delete Version / addtl button
-- Source control / commits integration via source-integration plugin
+Not supported in v1.x
 
 ## Authors of Original Code Base
 
