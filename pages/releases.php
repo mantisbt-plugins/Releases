@@ -56,10 +56,14 @@ releases_plugin_page_title(string_display_line($t_project_name), plugin_lang_get
 echo '<div hidden title="' . plugin_lang_get('confirm_delete_file') . '" id="releases_confirm_delete_file"></div>';
 echo '<div hidden title="' . plugin_lang_get('confirm_delete_version') . '" id="releases_confirm_delete_version"></div>';
 
+$t_edit_changelog = '';
+$t_edit = gpc_get_string('edit', 'false');
+$t_edit_version = gpc_get_string('version', '');
+
 foreach ($t_releases as $t_release) 
 {
     $t_prj_id = $t_release['project_id'];
-    
+
     $t_query = 'SELECT id,user,description,date_created,title FROM ' . plugin_table('release') . '
                  WHERE project_id=' . $t_prj_id . ' AND version_id=' . $t_release['id'];
     $t_result = db_query($t_query);
@@ -125,10 +129,8 @@ foreach ($t_releases as $t_release)
                 }
             }
 
-            echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="#releases_upload"> ' . plugin_lang_get('upload_title') . ' </a></td>';
-
             if ($t_user_has_upload_level) {
-                echo '<td width="30"><a class="btn btn-xs btn-primary btn-white btn-round" href="' . plugin_page('releases') . '&edit=true&version=' . $t_release['version'] . '&release=true&id=' . $t_row['id'] . '&changelog=' . urlencode($t_row['description']) . '#releases_upload" title=" ' . lang_get('edit_link') . '">' . lang_get('edit_link') . '</a></td>';
+                echo '<td width="30"><a class="btn btn-xs btn-primary btn-white btn-round" href="' . plugin_page('releases') . '&edit=true&version=' . $t_release['version'] . '&id=' . $t_row['id'] . '&release=true#releases_upload" title=" ' . lang_get('edit_link') . '">' . lang_get('edit_link') . '</a></td>';
                 echo '<td width="60"><a class="btn btn-xs btn-primary btn-white btn-round version_delete" href="' . plugin_page('delete') . '&release=true&id=' . $t_row['id'] . '" title=" ' . lang_get('delete_link') . '">' . lang_get('delete_link') . '</a></td>';
             }
 
@@ -146,6 +148,10 @@ foreach ($t_releases as $t_release)
             echo('<br>');
         }
         echo '</td></tr><tr><td height="7"></td></tr></table>';
+
+        if ($t_edit == 'true' && gpc_get_int('id') ==  $t_row['id']) {
+            $t_edit_changelog = $t_row['description'];
+        }
     }
     else {
         continue;
@@ -206,8 +212,6 @@ foreach ($t_releases as $t_release)
 
 if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS) 
 {
-    $t_edit = gpc_get_string('edit', 'false');
-    $t_edit_version = gpc_get_string('version', '');
     //$t_max_file_size = (int)min( ini_get_number( 'upload_max_filesize' ), ini_get_number( 'post_max_size' ), config_get( 'max_file_size' ) );
     $t_max_file_size = releases_max_upload_size()[0];
     echo '<br /><hr />' . "\n";
@@ -269,7 +273,7 @@ if ($t_user_has_upload_level && $t_project_id != ALL_PROJECTS)
                     <?php echo plugin_lang_get('release_description') . '<br /><span class="small">' . plugin_lang_get('overwrites_release_descrip') . '</span>' ?>
                 </td>
                 <td width="85%">
-                    <textarea class="form-control" name="description" rows="10" style="width:100% !important;"><?php echo urldecode(gpc_get_string('changelog', '')) ?></textarea>
+                    <textarea class="form-control" name="description" rows="10" style="width:100% !important;"><?php echo $t_edit_changelog; ?></textarea>
                 </td>
             </tr>
             <tr>
