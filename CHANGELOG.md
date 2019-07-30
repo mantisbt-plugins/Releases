@@ -1,5 +1,19 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.0 (July 29th, 2019)
+
+### Build System
+
+- **app-publisher:** correct mantisbt release url to https
+
+### Documentation
+
+- **readme:** update version badges
+
+### Features
+
+- **releases:** add support for editing a released version changelog
+
 ## Version 1.0.5 (July 27th, 2019)
 
 ### Bug Fixes
