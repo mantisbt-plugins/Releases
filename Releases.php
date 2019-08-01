@@ -18,7 +18,7 @@ class ReleasesPlugin extends MantisPlugin
 
         $this->author = "Scott Meesseman, Vincent DEBOUT, Jiri Hron, Igor Kozin";
         $this->contact = "spmeesseman@gmail.com";
-        $this->url = "https://github.com/spmeesseman/mantisbt-plugins";
+        $this->url = "https://github.com/mantisbt-plugins/Releases";
     }
 
     function init() 

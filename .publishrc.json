@@ -54,7 +54,7 @@
     "pathPreRoot":       "",
     "postBuildCommand":  "",
     "repoType":          "git",
-    "repo":              "https://github.com/spmeesseman/Releases.git",
+    "repo":              "https://github.com/mantisbt-plugins/Releases.git",
     "skipCommit":        "N",
     "skipDeployPush":    "N",
     "testEmailRecip":    "spmeesseman@gmail.com",

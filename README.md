@@ -5,14 +5,14 @@
 [![app-publisher](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-app--publisher-e10000.svg)](https://github.com/spmeesseman/app-publisher)
 [![authors](https://img.shields.io/badge/authors-scott%20meesseman%20--%20vincent%20debout--%20jiri%20hron-6F02B5.svg?logo=visual%20studio%20code)](https://github.com/spmeesseman)
 
-[![GitHub issues open](https://img.shields.io/github/issues-raw/spmeesseman/Releases.svg?maxAge=2592000&logo=github)](https://github.com/spmeesseman/Releases/issues)
-[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/spmeesseman/Releases.svg?maxAge=2592000&logo=github)](https://github.com/spmeesseman/Releases/issues)
+[![GitHub issues open](https://img.shields.io/github/issues-raw/spmeesseman/Releases.svg?maxAge=2592000&logo=github)](https://github.com/mantisbt-plugins/Releases/issues)
+[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/spmeesseman/Releases.svg?maxAge=2592000&logo=github)](https://github.com/mantisbt-plugins/Releases/issues)
 [![MantisBT issues open](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/issues/countbadge/Releases/open)](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=bug_report_page.php)
 [![MantisBT issues closed](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/issues/countbadge/Releases/closed)](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=bug_report_page.php)
 [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=plugin.php?page=Releases/releases)
 [![MantisBT version next](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/next)](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=plugin.php?page=Releases/releases)
 
-- [Release Management MantisBT Plugin](#Release-Management-MantisBT-Plugin)
+- [Releases MantisBT Plugin](#Releases-MantisBT-Plugin)
   - [Description](#Description)
   - [Installation](#Installation)
   - [Screenshots](#Screenshots)
@@ -22,7 +22,6 @@
     - [POST: /plugins/Releases/api/releases/{project}](#POST-pluginsReleasesapireleasesproject)
     - [PUT: /plugins/Releases/api/releases/{project}/{id}](#PUT-pluginsReleasesapireleasesprojectid)
     - [DELETE: /plugins/Releases/api/releases/{project}/{id}](#DELETE-pluginsReleasesapireleasesprojectid)
-  - [Future Maybes](#Future-Maybes)
   - [Authors of Original Code Base](#Authors-of-Original-Code-Base)
 
 ## Description
@@ -36,11 +35,11 @@ This plugin was developed and tested on MantisBT 2.21.1.
 Extract the release archive to the MantisBT installations plugins folder:
 
     cd /var/www/mantisbt/plugins
-    wget -O Releases.zip https://github.com/spmeesseman/Releases/releases/download/v1.0.1/Releases.zip
+    wget -O Releases.zip https://github.com/mantisbt-plugins/Releases/releases/download/v1.0.1/Releases.zip
     unzip Releases.zip
     rm -f Releases.zip
 
-Ensure to use the latest released version number in the download url: [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects) (version badge available via the [ApiExtend Plugin](https://github.com/spmeesseman/ApiExtend))
+Ensure to use the latest released version number in the download url: [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects) (version badge available via the [ApiExtend Plugin](https://github.com/mantisbt-plugins/ApiExtend))
 
 Install the plugin using the default installation procedure for a MantisBT plugin in `Manage -> Plugins`.
 
