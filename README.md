@@ -16,13 +16,13 @@
   - [Description](#Description)
   - [Installation](#Installation)
   - [Issues and Feature Requests](#Issues-and-Feature-Requests)
-  - [Screenshots](#Screenshots)
-    - [Plugin Releases Screen](#Plugin-Releases-Screen)
   - [REST API](#REST-API)
     - [GET: /plugins/Releases/api/releases/{project}/{id}](#GET-pluginsReleasesapireleasesprojectid)
     - [POST: /plugins/Releases/api/releases/{project}](#POST-pluginsReleasesapireleasesproject)
     - [PUT: /plugins/Releases/api/releases/{project}/{id}](#PUT-pluginsReleasesapireleasesprojectid)
     - [DELETE: /plugins/Releases/api/releases/{project}/{id}](#DELETE-pluginsReleasesapireleasesprojectid)
+  - [Screenshots](#Screenshots)
+    - [Plugin Releases Screen](#Plugin-Releases-Screen)
   - [Authors of Original Code Base](#Authors-of-Original-Code-Base)
 
 ## Description
@@ -49,12 +49,6 @@ For Apache configuration, see the example Location directive found in api/apache
 ## Issues and Feature Requests
 
 Issues for my plugins will probably at some point be hosted by my [MantisBT](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=bug_report_page.php) site.  Until that is up and running and configured correctly, please use [GitHub Issues](https://github.com/mantisbt-plugins/Releases/issues) to report any problems or requests.
-
-## Screenshots
-
-### Plugin Releases Screen
-
-![Release Page](res/releases.png "Plugin releases screen")
 
 ## REST API
 
@@ -122,6 +116,12 @@ Not supported in v1.x
 ### DELETE: /plugins/Releases/api/releases/{project}/{id}
 
 Not supported in v1.x
+
+## Screenshots
+
+### Plugin Releases Screen
+
+![Release Page](res/releases.png "Plugin releases screen")
 
 ## Authors of Original Code Base
 
