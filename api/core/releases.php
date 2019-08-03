@@ -355,7 +355,6 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 		#
 		# Update description, date_modified
 		#
-		$desc = db_prepare_string(htmlspecialchars_decode($notes));
 		$query = "UPDATE $dbTable SET description=? WHERE id=" . $release_id;
 		if ($dryRun) {
 			$rtnMessage = $rtnMessage . "Release SQL: " . $query . "\n";

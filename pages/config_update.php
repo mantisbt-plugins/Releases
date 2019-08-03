@@ -63,6 +63,11 @@
         plugin_config_delete( 'download_requires_login', NO_USER, $t_project_id );
     }
 
-    form_security_purge( 'plugin_Releasemgt_config_update' );
+    form_security_purge( 'plugin_Releases_config_update' );
 
-    release_mgt_successful_redirect( 'config' );
+    $t_redirect_url = plugin_page('config', TRUE);
+    
+    layout_page_header( null, $t_redirect_url );
+    layout_page_begin();
+    html_operation_successful( $t_redirect_url );
+    layout_page_end();
