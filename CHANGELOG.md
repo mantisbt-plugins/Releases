@@ -1,5 +1,11 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.2 (August 3rd, 2019)
+
+### Features
+
+- show the success redirect when saving config settings
+
 ## Version 1.1.1 (July 29th, 2019)
 
 ### Documentation
