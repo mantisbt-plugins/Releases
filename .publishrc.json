@@ -12,6 +12,7 @@
         "cmd /c copy /Y LICENSE.txt build\\Releases",
         "cmd /c copy /Y Releases.php build\\Releases",
         "Compress-Archive -Path build\\Releases -Update -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
+        "tar -czf build/Releases.tgz build\\Releases",
         "cmd /c rmdir /S /Q build\\Releases"
     ],
     "changelogFile":     "CHANGELOG.md",
@@ -28,6 +29,7 @@
     "emailSender":       "",
     "githubRelease":     "Y",
     "githubAssets": [
+        "build\\Releases.tgz",
         "build\\Releases.zip"
     ],
     "githubUser":        "mantisbt-plugins",
@@ -41,6 +43,7 @@
     "mantisbtUrl":       "https://app1.spmeesseman.com/projects",
     "mantisbtApiToken":  "${MANTIS_API_TOKEN}",
     "mantisbtAssets": [
+        "build\\Releases.tgz|GZip Tarball",
         "build\\Releases.zip|Release Zip Archive"
     ],
     "npmPackDist":       "N",
