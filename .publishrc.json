@@ -12,7 +12,7 @@
         "cmd /c copy /Y LICENSE.txt build\\Releases",
         "cmd /c copy /Y Releases.php build\\Releases",
         "Compress-Archive -Path build\\Releases -Update -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
-        "tar -czf build/Releases.tgz build\\Releases",
+        "tar -C build -czf build/Releases.tgz Releases",
         "cmd /c rmdir /S /Q build\\Releases"
     ],
     "changelogFile":     "CHANGELOG.md",
