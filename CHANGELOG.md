@@ -1,5 +1,16 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.4 (August 8th, 2019)
+
+### Documentation
+
+- **readme:** move screenshots to bottom to follow convention
+
+### Bug Fixes
+
+- php include path is being filled with mutliple entries for core_path
+- tgz release package does not contain the plugin directory as the top level
+
 ## Version 1.1.3 (August 3rd, 2019)
 
 ### Build System
