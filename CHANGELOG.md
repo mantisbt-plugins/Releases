@@ -1,5 +1,15 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.5 (August 10th, 2019)
+
+### Documentation
+
+- **readme:** udpate issues submit section
+
+### Refactoring
+
+- if a project does not have any released versions, dont display the Releases link in the navigation bar.
+
 ## Version 1.1.4 (August 8th, 2019)
 
 ### Documentation
