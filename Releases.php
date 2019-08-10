@@ -45,12 +45,27 @@ class ReleasesPlugin extends MantisPlugin
     public function menu()
     {
         $links = array();
-        $links[] = array(
-          'title'=> plugin_lang_get("title"),
-          'url'=> plugin_page("releases", false),
-          'access_level'=> plugin_config_get('view_threshold_level', UPDATER),
-          'icon'=> 'fa-download'
-        );
+
+        $t_project_id = helper_get_current_project();
+        $t_show_menu_link = true;
+
+        if ($t_project_id != ALL_PROJECTS) {
+            $t_releases = version_get_all_rows($t_project_id, 1);
+            if (count($t_releases) == 0) {
+                $t_show_menu_link = false;
+            }
+        }
+
+        if ($t_show_menu_link) 
+        {
+            $links[] = array(
+                'title'=> plugin_lang_get("title"),
+                'url'=> plugin_page("releases", false),
+                'access_level'=> plugin_config_get('view_threshold_level', UPDATER),
+                'icon'=> 'fa-download'
+            );
+        }
+
         return $links;
     }
 
