@@ -303,6 +303,7 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 		$version_id = version_get_id($version, $project_id);
 		$version_info = version_get($version_id);
 		$version_info->released = VERSION_RELEASED;
+		$version_info->date_order = db_now();
 		if (!$dryRun) {
 			version_update($version_info);
 		}
