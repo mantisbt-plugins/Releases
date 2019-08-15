@@ -1,5 +1,11 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.6 (August 14th, 2019)
+
+### Bug Fixes
+
+- **API:** an existing version should have its date_order updated when a release request is made for that version
+
 ## Version 1.1.5 (August 10th, 2019)
 
 ### Documentation
