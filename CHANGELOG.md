@@ -1,5 +1,11 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.7 (August 15th, 2019)
+
+### Refactoring
+
+- use query binding for all database inserts/updates
+
 ## Version 1.1.6 (August 14th, 2019)
 
 ### Bug Fixes
