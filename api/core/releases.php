@@ -326,18 +326,22 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
     $result = db_query($query);
 	$rowCount = db_result($result);
 	
+	$t_version_name = 'Version ' . $version;
+	$t_date_fmt = date("Y-m-d H:i:s");
+
 	#
 	# Create the release in database
 	#
 	if ($rowCount < 1)
 	{
-		$query = "INSERT INTO $dbTable (project_id, version_id, title, description, date_created, user) VALUES ".
-				 "(".$project_id.", ".$version_id.", 'Version " . $version."', ?, '".date("Y-m-d H:i:s")."', '".$current_user."')";
+		$query = "INSERT INTO $dbTable (project_id, version_id, title, description, date_created, user) VALUES (?, ?, ?, ?, ?, ?)";
 		if (!$dryRun) {
-			db_query($query, array($notes));
+			db_query($query, array($project_id, $version_id, $t_version_name, $notes, $t_date_fmt, $current_user));
 			$release_id = db_insert_id($dbTable);
 		}
 		else {
+			$query = "INSERT INTO $dbTable (project_id, version_id, title, description, date_created, user) VALUES ".
+				     "(" . $project_id . ", " . $version_id . ", '" . $t_version_name . "', ?, '" . $t_date_fmt . "', '" . $current_user . "')";
 			$release_id = 0;
 			$rtnMessage = $rtnMessage . "Release SQL: " . $query . "\n";
 		}

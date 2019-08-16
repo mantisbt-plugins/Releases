@@ -41,12 +41,9 @@ $rowCount = db_result($result);
 #
 if ($rowCount < 1)
 {
-    $query = "INSERT INTO $dbTable
-                (project_id, version_id, title, description, date_created, user)
-                VALUES
-                (".$t_project_id.", ".$t_version_id.", '', '
-                ".db_prepare_string($t_notes)."', '".date("Y-m-d H:i:s")."', '".$current_user."')";
-    db_query($query);
+    $t_date_fmt = date("Y-m-d H:i:s");
+    $query = "INSERT INTO $dbTable (project_id, version_id, title, description, date_created, user) VALUES (?,?,'',?,?,?)";
+    db_query($query, array($t_project_id, $t_version_id, $t_notes, $t_date_fmt, $current_user));
     $release_id = db_insert_id($dbTable);
 }
 elseif (!empty($t_notes))

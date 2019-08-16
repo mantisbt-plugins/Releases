@@ -304,17 +304,12 @@ echo "DBG: 0:0, $t_method, FTP<BR>\n";
 	#
 	$current_user_id = auth_get_current_user_id();
 	$current_user = user_get_username($current_user_id);
-    
-    $t_file_table = plugin_table('file'); #, 'Releases');
-    $query = "INSERT INTO $t_file_table
-				(release_id, project_id, version_id, user, title, description, 
-				 diskfile, filename, folder, filesize, 
-				 file_type, date_added, content)
-			  VALUES
-				(" . $p_release_id . ", " . $p_project_id . ", " . $p_version_id . ", '".$current_user."', '" . $c_title . "', '
-				 " . $c_desc . "', '" . $c_disk_file_name . "', '" . $c_new_file_name . "', '" . $c_file_path . "', 
-                 " . $t_file_size . ", '" . $c_file_type . "', '" . date("Y-m-d H:i:s") . "', '" . $c_content . "')";
-    db_query($query);
+    $t_date_fmt = date("Y-m-d H:i:s");
+    $t_file_table = plugin_table('file');
+    $query = "INSERT INTO $t_file_table (release_id,project_id,version_id,user,title,description,diskfile,filename,folder,filesize, " .
+			                            "file_type, date_added, content) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    db_query($query, array($p_release_id, $p_project_id, $p_version_id, $current_user,  $c_title, $c_desc, $c_disk_file_name, 
+                           $c_new_file_name, $c_file_path, $t_file_size, $c_file_type, $t_date_fmt, $c_content));
     $t_file_id = db_insert_id($t_file_table);
     return $t_file_id;
 }
