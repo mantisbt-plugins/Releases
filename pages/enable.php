@@ -8,7 +8,6 @@ $t_current_user_id = auth_get_current_user_id();
 $t_project_id = helper_get_current_project();
 
 form_security_validate( 'plugin_Releases_enable' );
-auth_reauthenticate();
 access_ensure_project_level( plugin_config_get( 'upload_threshold_level', PLUGINS_RELEASES_UPLOAD_THRESHOLD_LEVEL_DEFAULT ), $t_project_id, $t_current_user_id );
 
 $t_id = gpc_get_int( 'id' );
