@@ -1,5 +1,17 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.9 (August 17th, 2019)
+
+### Bug Fixes
+
+- can no longer delete releases as of v1.1.8
+- when manually uploading assets, the user id is shown as the 'released by' user instead of the username/avatar
+- **Releases Page:** manually uploaded releases differ in title to those uploaded via rest api
+
+### Refactoring
+
+- remove reauthorization for requests coming from releases page itself
+
 ## Version 1.1.8 (August 17th, 2019)
 
 ### Bug Fixes
