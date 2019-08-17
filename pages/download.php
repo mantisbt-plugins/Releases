@@ -1,7 +1,19 @@
 <?php
 
+#require_once( '../../../core.php' );
+#require_once( '../../../api/form_api.php' );
+#require_once( '../core/releases_api.php' );
+#require_once( '../core/constant_api.php' );
+
 # Prevent output of HTML in the content if errors occur
 //define('DISABLE_INLINE_ERROR_REPORTING', true);
+
+#$t_current_user_id = auth_get_current_user_id();
+#$t_project_id = helper_get_current_project();
+
+#form_security_validate( 'plugin_Releases_download' );
+#auth_reauthenticate();
+#access_ensure_project_level( plugin_config_get( 'download_threshold_level', PLUGINS_RELEASES_DOWNLOAD_THRESHOLD_LEVEL_DEFAULT ), $t_project_id, $t_current_user_id );
 
 $g_bypass_headers = true; # suppress headers as we will send our own later
 define('COMPRESSION_DISABLED', true);
@@ -135,6 +147,9 @@ switch (plugin_config_get('upload_method', PLUGINS_RELEASES_UPLOAD_METHOD_DEFAUL
   default:
     echo $v_content;
 }
+
+#form_security_purge( 'plugin_Releases_download' );
+
 ?>
 
 
