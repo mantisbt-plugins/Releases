@@ -1,5 +1,17 @@
 # RELEASES CHANGE LOG
 
+## Version 1.1.8 (August 17th, 2019)
+
+### Bug Fixes
+
+- fix security vulnerabilities with delete/enable/upload actions on release page
+- gantt chart buttons no longer appear after remaing of GanttChart2 plugin to GanttChart
+
+### Visual Enhancements
+
+- convert download links to buttons
+- show assets to users with view_threshhold_level but not download button
+
 ## Version 1.1.7 (August 15th, 2019)
 
 ### Refactoring
