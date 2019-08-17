@@ -131,7 +131,7 @@ foreach ( $t_releases as $t_release )
 
             if ( $t_user_has_upload_level ) {
                 echo '<td width="30"><a class="btn btn-xs btn-primary btn-white btn-round" href="' . plugin_page( 'releases' ) . '&edit=true&version=' . $t_release['version'] . '&id=' . $t_row['id'] . '&release=true#releases_upload" title=" ' . lang_get( 'edit_link' ) . '">' . lang_get( 'edit_link' ) . '</a></td>';
-                echo '<td width="60"><a class="btn btn-xs btn-primary btn-white btn-round version_delete" href="' . plugin_page( 'delete' ) . '&release=true&id=' . $t_row['id'] . '" title=" ' . lang_get( 'delete_link' ) . '">' . lang_get( 'delete_link' ) . '</a></td>';
+                echo '<td width="60"><a class="btn btn-xs btn-primary btn-white btn-round version_delete" href="' . plugin_page( 'delete' ) . '&release=true&id=' . $t_row['id'] . form_security_param( 'plugin_Releases_delete' ) . '" title=" ' . lang_get( 'delete_link' ) . '">' . lang_get( 'delete_link' ) . '</a></td>';
             }
 
             echo '</tr></table>';
