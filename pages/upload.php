@@ -17,10 +17,10 @@ $t_version_id = gpc_get_int( 'release', 0 );
 $t_notes = gpc_get_string( 'description', '' );
 
 $t_current_user_id = auth_get_current_user_id();
+$t_current_user = user_get_username($t_current_user_id);
 $t_project_id = helper_get_current_project();
 
 form_security_validate( 'plugin_Releases_upload' );
-auth_reauthenticate();
 access_ensure_project_level( plugin_config_get( 'upload_threshold_level', PLUGINS_RELEASES_UPLOAD_THRESHOLD_LEVEL_DEFAULT ), $t_project_id, $t_current_user_id );
 
 log_event(  LOG_PLUGIN, "Releases: Upload/update release '%s'", $t_version  );
@@ -46,13 +46,13 @@ if ( $rowCount < 1 )
 {
     $t_date_fmt = date( "Y-m-d H:i:s" );
     $query = "INSERT INTO $dbTable ( project_id, version_id, title, description, date_created, user ) VALUES ( ?,?,'',?,?,? )";
-    db_query( $query, array( $t_project_id, $t_version_id, $t_notes, $t_date_fmt, $current_user ) );
+    db_query( $query, array( $t_project_id, $t_version_id, $t_notes, $t_date_fmt, $t_current_user ) );
     $release_id = db_insert_id( $dbTable );
 }
 elseif ( !empty( $t_notes ) )
 {
-    $query = "UPDATE $dbTable SET description='" . db_prepare_string( $t_notes ) . "' WHERE version_id=" . $t_version_id;
-    db_query( $query );
+    $query = "UPDATE $dbTable SET description=? WHERE version_id=?";
+    db_query( $query, array( $t_notes, $t_version_id ) );
 }
     
 for( $i=0; $i < $t_file_count; $i++ ) 
