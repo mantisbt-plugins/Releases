@@ -34,7 +34,7 @@ $t_releases = null;
 
 if ( $t_project_id != ALL_PROJECTS )
 {
-    $t_releases = version_get_all_rows( $t_project_id, 1 );
+    $t_releases = version_get_all_rows( $t_project_id, true, false, false );
 }
 else
 {
@@ -43,7 +43,7 @@ else
     foreach ( $projects as $proj ) {
         array_push( $project_ids, $proj['id'] );
     }
-    $t_releases = version_get_all_rows( $project_ids, 1 );
+    $t_releases = version_get_all_rows( $project_ids, true );
 }
 
 $t_project_name = project_get_name( $t_project_id );
@@ -79,11 +79,11 @@ foreach ( $t_releases as $t_release )
         if ( !is_blank( $t_row['title'] ) ) {
             $t_release_title = $t_row['title'];
             if ( $t_project_id == ALL_PROJECTS ) {
-                $t_release_title = string_display( $t_project_name ) . ' - ' . $t_release_title;
+                $t_release_title = $t_project_name . ' - ' . $t_release_title;
             }
         }
         else {
-            $t_release_title = string_display( $t_project_name ) . ' - ' . string_display( $t_release['version'] );
+            $t_release_title = plugin_lang_get( $t_project_name ) . lang_get('version') . ' ' . $t_release['version'];
         }
 
         releases_plugin_release_title( $t_project_name, $t_release_title, $t_release['version'] );
