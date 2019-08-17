@@ -126,7 +126,10 @@ class ReleasesPlugin extends MantisPlugin
 
     function config() {
         return array(
-            'download_requires_login'  => true
+            'download_requires_login'  => true,
+            'view_threshold_level' => REPORTER,
+            'download_threshold_level' => UPDATER,
+            'upload_threshold_level' => DEVELOPER
         );
     }
 

@@ -7,6 +7,10 @@ $s_plugin_Releases_ = '';
 $s_plugin_Releases_title = 'Releases';
 $s_plugin_Releases_description = 'Release Management by Version';
 
+/* General */
+
+$s_plugin_Releases_download = 'Download';
+
 /* Display page */
 
 $s_plugin_Releases_display_page_title = 'Releases';
