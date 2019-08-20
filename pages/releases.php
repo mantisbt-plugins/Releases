@@ -107,8 +107,8 @@ foreach ( $t_releases as $t_release )
             echo $t_row['user'] . '</b> released this on ' . $t_row['date_created'];
             echo '</td>';
 
-            echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="changelog_page.php?project_id=' . $t_prj_id . '"> ' . string_display_line( $t_project_name ) . ' </a></td>';
-            echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="changelog_page.php?version_id=' . $t_release['id'] . '"> ' . string_display_line( $t_release['version'] ) . ' </a></td>';
+            echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="changelog_page.php?project_id=' . $t_prj_id . '"> ' . $t_project_name . ' </a></td>';
+            echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" href="changelog_page.php?version_id=' . $t_release['id'] . '"> ' . $t_release['version'] . ' </a></td>';
             
             echo '<td width="40"><a class="btn btn-xs btn-primary btn-white btn-round" ';
             echo 'href="view_all_set.php?type=1&temporary=y&' . FILTER_PROPERTY_PROJECT_ID . '=' . $t_project_id .
