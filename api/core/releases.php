@@ -213,10 +213,10 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 	#
 	$p_dry_run = isset( $p_payload['dryrun'] ) && (bool)$p_payload['dryrun'];
 	if ( !$p_dry_run ) {
-		$rtnMessage = "Success: ";
+		$rtnMessage = "Success:\n";
 	}
 	else {
-		$rtnMessage = "Dry Run Results: ";
+		$rtnMessage = "Dry Run Results:\n";
 	}
 
 	#
@@ -315,18 +315,23 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 		if ( !$p_dry_run ) {
 			version_update( $t_version_info );
 		}
-		$rtnMessage = $rtnMessage . "Version updated, $p_version to 'released'\n";
+		$rtnMessage = $rtnMessage . "Version $p_version updated to 'released'\n";
 	}
 	if ( $t_version_id === null) {
 		return $p_response->withStatus(HTTP_STATUS_PRECONDITION_FAILED, "Could not create or open version" );
 	}
 
 	#
+	# Clear cache since version_api doesnt do it (as of 2.21.1)
+	#
+	releases_clear_version_cache();
+
+	#
 	# Create next patch, minor, and major versions if they do not exist
 	#
 	if ( plugin_config_get( 'create_next_versions', 0, false, null, $t_project_id ) == 1 ) 
 	{
-		create_next_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		releases_create_next_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
 	}
 
 	#
@@ -334,7 +339,7 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 	#
 	if ( plugin_config_get( 'update_unresolved_issues_tgt', 0, false, null, $t_project_id ) == 1 ) 
 	{
-		update_unresolved_issues_tgt( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		releases_update_unresolved_issues_tgt( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
 	}
 
 	#
@@ -342,7 +347,7 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 	#
 	if ( plugin_config_get( 'remove_past_unreleased_versions', 0, false, null, $t_project_id ) == 1 ) 
 	{
-		remove_past_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		releases_remove_past_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
 	}
 
 	#
@@ -350,7 +355,7 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 	#
 	if ( plugin_config_get( 'sort_unreleased_versions', 0, false, null, $t_project_id ) == 1 ) 
 	{
-		sort_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		releases_sort_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
 	}
 
 	#
@@ -472,7 +477,21 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 }
 
 
-function get_last_released_version( $p_project_id )
+function releases_clear_version_cache()
+{
+	global $g_cache_versions, $g_cache_versions_project;
+	$g_cache_versions = array();
+	$g_cache_versions_project  = array();
+	#if ( isset( $g_cache_versions[$t_v_id] ) ) {
+	#	unset( $g_cache_versions[$t_v_id] );
+	#}
+	#if ( isset( $g_cache_versions_project[$p_project_id] ) ) { # clear cache since version_api doesnt do it
+	#	unset( $g_cache_versions_project[$p_project_id] );
+	#}
+}
+
+
+function releases_get_last_released_version( $p_project_id )
 {
 	$t_version = null;
 	$t_versions = version_get_all_rows( $p_project_id, VERSION_RELEASED );
@@ -492,7 +511,7 @@ function get_last_released_version( $p_project_id )
 }
 
 
-function get_new_target_version( $p_version, $p_project_id )
+function releases_get_new_target_version( $p_version, $p_project_id )
 {
 	#
 	# Break down the version so we can increment it as needed.  This will depend if the version
@@ -500,11 +519,12 @@ function get_new_target_version( $p_version, $p_project_id )
 	#
 	$t_version = $p_version;
 	$t_version_parts = explode( ".", $t_version ); // array( "maj", "min", "patch" )
-	if ( strpos( $t_version, '.' ) != false )
+	if ( strpos( $t_version, '.' ) !== false )
 	{
 		$t_version_parts[2] = 0;
 		++$t_version_parts[1];
 		$t_version = implode( ".", $t_version_parts ); // implode array back to string
+
 		$t_next_version_id = version_get_id( $t_version, $p_project_id );
 		if ( $t_next_version_id === false )
 		{
@@ -528,12 +548,12 @@ function get_new_target_version( $p_version, $p_project_id )
 }
 
 
-function create_next_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
+function releases_create_next_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
 {
 	$t_version = $p_version;
 	$t_version_parts = explode( ".", $t_version ); // array( "maj", "min", "patch" )
 		
-	if ( strpos( $t_version, '.' ) != false )
+	if ( strpos( $t_version, '.' ) !== false )
 	{
 		#
 		# Create the next patch version if it doesnt exist
@@ -543,9 +563,11 @@ function create_next_versions( $p_version, $p_project_id, $p_dry_run = false, &$
 		if ( version_get_id( $t_version, $p_project_id ) === false ) 
 		{
 			if ( !$p_dry_run ) {
-				version_add( $p_project_id, $t_version, VERSION_FUTURE, db_now() + (3600 * 24 * 7) );
+				version_cache_row( version_add( $p_project_id, $t_version, VERSION_FUTURE, '', db_now() + (3600 * 24 * 7) ) );
 			}
-			$rtnMessage = $rtnMessage . "Add next patch version $t_version\n";
+			if ( $rtnMessage !== null ) {
+				$rtnMessage = $rtnMessage . "Add next patch version $t_version\n";
+			}
 			log_event(LOG_PLUGIN, "Added next patch version $t_version");
 		}
 		#
@@ -557,9 +579,11 @@ function create_next_versions( $p_version, $p_project_id, $p_dry_run = false, &$
 		if ( version_get_id( $t_version, $p_project_id ) === false ) 
 		{
 			if ( !$p_dry_run ) {
-				version_add( $p_project_id, $t_version, VERSION_FUTURE, db_now() + (3600 * 24 * 30) );
+				version_cache_row( version_add( $p_project_id, $t_version, VERSION_FUTURE, '', db_now() + (3600 * 24 * 30) ) );
 			}
-			$rtnMessage = $rtnMessage . "Add next minor version $t_version\n";
+			if ( $rtnMessage !== null ) {
+				$rtnMessage = $rtnMessage . "Add next minor version $t_version\n";
+			}
 			log_event(LOG_PLUGIN, "Added next minor version $t_version");
 		}
 		#
@@ -572,9 +596,11 @@ function create_next_versions( $p_version, $p_project_id, $p_dry_run = false, &$
 		if ( version_get_id( $t_version, $p_project_id ) === false ) 
 		{
 			if ( !$p_dry_run ) {
-				version_add( $p_project_id, $t_version, VERSION_FUTURE, '', db_now() + (3600 * 24 * 90) );
+				version_cache_row( version_add( $p_project_id, $t_version, VERSION_FUTURE, '', db_now() + (3600 * 24 * 90) ) );
 			}
-			$rtnMessage = $rtnMessage . "Add next major version $t_version\n";
+			if ( $rtnMessage !== null ) {
+				$rtnMessage = $rtnMessage . "Add next major version $t_version\n";
+			}
 			log_event(LOG_PLUGIN, "Added next major version $t_version");
 		}
 	}
@@ -587,16 +613,21 @@ function create_next_versions( $p_version, $p_project_id, $p_dry_run = false, &$
 		if ( version_get_id( $t_version, $p_project_id ) === false ) 
 		{
 			if ( !$p_dry_run ) {
-				version_add( $p_project_id, $t_version, VERSION_FUTURE, db_now() + (3600 * 24 * 90) );
+				version_cache_row( version_add( $p_project_id, $t_version, VERSION_FUTURE, '', db_now() + (3600 * 24 * 90) ) );
 			}
-			$rtnMessage = $rtnMessage . "Add next version $t_version\n";
+			if ( $rtnMessage !== null ) {
+				$rtnMessage = $rtnMessage . "Add next version $t_version\n";
+			}
 			log_event(LOG_PLUGIN, "Added next version $t_version");
 		}
 	}
 }
 
-function remove_past_unreleased_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
+
+function releases_remove_past_unreleased_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
 {
+	$t_changed = false;
+
 	$t_versions = version_get_all_rows( $p_project_id, VERSION_FUTURE );
 	foreach ( $t_versions as $v ) 
 	{
@@ -630,7 +661,7 @@ function remove_past_unreleased_versions( $p_version, $p_project_id, $p_dry_run 
 			#$t_filter[FILTER_PROPERTY_HIDE_STATUS] = array( '0' => RESOLVED );
 			$t_filter = filter_ensure_valid_filter($t_filter);
 
-			$t_version = get_new_target_version( $p_version, $p_project_id );
+			$t_version = releases_get_new_target_version( $p_version, $p_project_id );
 
 			$t_bugs = filter_get_bug_rows( $t_bug_page_number, $t_bug_per_page, $t_bug_page_count, $t_bug_count, $t_filter, $p_project_id );
 			if( $t_bugs !== false ) 
@@ -644,7 +675,9 @@ function remove_past_unreleased_versions( $p_version, $p_project_id, $p_dry_run 
 							if ( !$p_dry_run ) {
 								bug_set_field( $t_bug->id, 'target_version', $t_version );
 							}
-							$rtnMessage = $rtnMessage . "Set bug #" . $t_bug->id . " target version from $t_v_name to $t_version\n";
+							if ( $rtnMessage !== null ) {
+								$rtnMessage = $rtnMessage . "Set bug #" . $t_bug->id . " target version from $t_v_name to $t_version\n";
+							}
 							log_event(LOG_PLUGIN, "Set bug #" . $t_bug->id . " target version from $t_v_name to $t_version");
 						}
 					}
@@ -653,7 +686,9 @@ function remove_past_unreleased_versions( $p_version, $p_project_id, $p_dry_run 
 						if ( !$p_dry_run ) {
 							bug_set_field( $t_bug->id, 'fixed_in_version', $p_version );
 						}
-						$rtnMessage = $rtnMessage . "Set bug #" . $t_bug->id . " 'fixed in' version from $t_v_name to $p_version\n";
+						if ( $rtnMessage !== null ) {
+							$rtnMessage = $rtnMessage . "Set bug #" . $t_bug->id . " 'fixed in' version from $t_v_name to $p_version\n";
+						}
 						log_event(LOG_PLUGIN, "Set bug #" . $t_bug->id . " 'fixed in' version from $t_v_name to $p_version");
 					}
 				}
@@ -661,27 +696,37 @@ function remove_past_unreleased_versions( $p_version, $p_project_id, $p_dry_run 
 
 			if ( !$p_dry_run ) {
 				version_remove( $t_v_id );
+				$t_changed = true;
 			}
-			$rtnMessage = $rtnMessage . "Removed previous unreleased version $t_v_name\n";
+			if ( $rtnMessage !== null ) {
+				$rtnMessage = $rtnMessage . "Removed previous unreleased version $t_v_name\n";
+			}
 			log_event(LOG_PLUGIN, "Removed previous unreleased version $t_v_name");
 		}
+	}
+
+	#
+	# Clear cache since version_api doesnt do it (as of 2.21.1)
+	#
+	if ( $t_changed )
+	{
+		releases_clear_version_cache();
 	}
 }
 
 
-function sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
+function releases_sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
 {
 	$protect = $p_dry_run ? 1 : 10;
-	while ( $protect > 0 && _sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run, $rtnMessage ) > 0 ) {
+	while ( $protect > 0 && _releases_sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run, $rtnMessage ) > 0 ) {
 		$protect--;
 	}
 }
 
 
-function _sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null, &$ignore_versions = array() )
+function _releases_sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null, &$ignore_versions = array() )
 {
 	$t_sorted = 0;
-
 	$t_versions = version_get_all_rows( $p_project_id, VERSION_FUTURE );
 	$t_order  = array_column($t_versions, 'date_order');
 	array_multisort( $t_order, SORT_ASC, $t_versions );
@@ -735,19 +780,27 @@ function _sort_unreleased_versions( $p_version, $p_project_id, $p_dry_run = fals
 					$rtnMessage = $rtnMessage . "Update version $t_v_name to new timestamp\n";
 					$rtnMessage = $rtnMessage . "    Compared to: $t_v_name2\n";
 					$rtnMessage = $rtnMessage . "    New timestamp: $fmt_date\n";
-					log_event(LOG_PLUGIN, "Update version $t_v_name to new timestamp");
 				}
+				log_event(LOG_PLUGIN, "Update version $t_v_name to new timestamp");
 			}
 		}
+	}
+
+	#
+	# Clear cache since version_api doesnt do it (as of 2.21.1)
+	#
+	if ( $t_sorted > 0 )
+	{
+		releases_clear_version_cache();
 	}
 
 	return $t_sorted;
 }
 
 
-function update_unresolved_issues_tgt( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
+function releases_update_unresolved_issues_tgt( $p_version, $p_project_id, $p_dry_run = false, &$rtnMessage = null )
 {
-	$t_version = get_new_target_version( $p_version, $p_project_id );
+	$t_version = releases_get_new_target_version( $p_version, $p_project_id );
 
 	if ( $t_version != $p_version && version_get_id( $t_version, $p_project_id ) !== false ) 
 	{
@@ -771,7 +824,9 @@ function update_unresolved_issues_tgt( $p_version, $p_project_id, $p_dry_run = f
 				if ( !$p_dry_run ) {
 					bug_set_field( $t_bug->id, 'target_version', $t_version );
 				}
-				$rtnMessage = $rtnMessage . "Change bug #" . $t_bug->id . " target version from $p_version to $t_version\n";
+				if ( $rtnMessage !== null ) {
+					$rtnMessage = $rtnMessage . "Change bug #" . $t_bug->id . " target version from $p_version to $t_version\n";
+				}
 			}
 		}
 	}
