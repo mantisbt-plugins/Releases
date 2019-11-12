@@ -70,6 +70,38 @@ function releases_plugin_section_title($p_title, $p_fa_icon, $p_block_id)
 	echo '    <div class="widget-main">';
 }
 
+
+function releases_plugin_config_section_title($p_title, $p_fa_icon)
+{
+    $t_block_css = $t_collapse_block ? 'collapsed' : '';
+    $t_block_icon = $t_collapse_block ? 'fa-chevron-down' : 'fa-chevron-up';
+
+    echo '<div id="' . $t_block_id . '" class="widget-box widget-color-blue2  no-border ' . $t_block_css . '">';
+    echo '  <div class="widget-header widget-header-small">';
+    echo '    <h5 class="widget-title lighter">';
+    echo '    <i class="ace-icon fa ' . $p_fa_icon . '"></i>';
+    echo $p_title, lang_get('word_separator');
+    echo '    </h5>';
+    echo '  </div>';
+    echo '</div>';
+}
+
+
+function releases_plugin_config_section_subtitle($p_title, $p_fa_icon)
+{
+    $t_block_css = $t_collapse_block ? 'collapsed' : '';
+    $t_block_icon = $t_collapse_block ? 'fa-chevron-down' : 'fa-chevron-up';
+
+    echo '<div id="' . $t_block_id . '" class="widget-box widget-color-blue2  no-border ' . $t_block_css . '">';
+    echo '  <div class="widget-header widget-header-small">';
+    echo '    <h5 class="widget-title lighter">';
+    echo '    <i class="ace-icon fa ' . $p_fa_icon . '"></i>';
+    echo $p_title, lang_get('word_separator');
+    echo '    </h5>';
+    echo '  </div>';
+    echo '</div>';
+}
+
 function releases_max_upload_size()
 {
         $t_max_sizes = array(

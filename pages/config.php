@@ -20,13 +20,12 @@ $t_project_id = helper_get_current_project();
 <?php
 
   //echo str_replace( '%%project%%', '<b>' . project_get_name( helper_get_current_project() ) . '</b>',plugin_lang_get( 'configuration_for_project' ) );
-  releases_plugin_section_title( 
+  releases_plugin_config_section_title( 
       str_replace( '%%project%%', '<b>' . project_get_name( helper_get_current_project() ) . '</b>', plugin_lang_get( 'configuration_for_project' ) ), 
-      'fa-file-o',
-      'releases_config' 
+      'fa-file-o'
   );
 ?>
-  <br /><br />
+  <br />
   <form name="plugins_releases" method="post" action="<?php echo plugin_page( 'config_update' ) ?>">
     <?php echo form_security_field( 'plugin_Releases_config_update' ) ?>
     <input type="hidden" name="action" value="update" />
@@ -34,6 +33,10 @@ $t_project_id = helper_get_current_project();
     <input type="hidden" name="plugin" value="releases" />
 <!--    <table class="width75" cellspacing="1"> -->
     <table class="width100 table table-striped table-bordered table-condensed" cellspacing="1">
+
+      <tr><td colspan="2">
+        <?php echo releases_plugin_config_section_subtitle( plugin_lang_get( 'user_access' ), 'fa-user', 'releases_user_access_config' ); ?>
+      </td></tr>
 
       <!-- View access level - notes -->
       <tr <?php echo helper_alternate_class() ?>>
@@ -81,10 +84,10 @@ $t_project_id = helper_get_current_project();
         </td>
       </tr>
 
-      <!-- spacer -->
-      <tr>
-        <td class="spacer" colspan="2">&nbsp;</td>
-      </tr>
+      <!-- subsection title -->
+      <tr><td colspan="2">
+        <?php echo releases_plugin_config_section_subtitle( plugin_lang_get( 'file_upload' ), 'fa-upload', 'releases_file_upload_config' ); ?>
+      </td></tr>
 
       <!-- file number -->
       <tr <?php echo helper_alternate_class() ?>>
@@ -126,7 +129,6 @@ $t_project_id = helper_get_current_project();
         </td>
       </tr>
 
-
       <!-- Disk parameter -->
       <tr <?php echo helper_alternate_class() ?>>
         <td class="category" width="30%">
@@ -137,143 +139,6 @@ $t_project_id = helper_get_current_project();
         </td>
       </tr>
 
-      <!-- spacer -->
-      <tr>
-        <td class="spacer" colspan="2">&nbsp;</td>
-      </tr>
-
-      <?php
-      /**
-       * @todo FTP file storage is not yet converted - so function is disabled
-      <!-- FTP parameters: server -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <span class="required">*</span><?php echo plugin_lang_get( 'ftp_server' ); ?>
-        </td>
-        <td width="70%">
-          <input type="text" name="ftp_server" size="30" value="<?php echo plugin_config_get( 'ftp_server', PLUGINS_RELEASES_FTP_SERVER_DEFAULT ); ?>" />
-        </td>
-      </tr>
-
-      <!-- FTP parameters: user -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <span class="required">*</span><?php echo plugin_lang_get( 'ftp_user' ); ?>
-        </td>
-        <td width="70%">
-          <input type="text" name="ftp_user" value="<?php echo plugin_config_get( 'ftp_user', PLUGINS_RELEASES_FTP_USER_DEFAULT ); ?>" />
-        </td>
-      </tr>
-
-      <!-- FTP parameters: pass -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <span class="required">*</span><?php echo plugin_lang_get( 'ftp_pass' ); ?>
-        </td>
-        <td width="70%">
-          <input type="password" name="ftp_pass" value="<?php echo plugin_config_get( 'ftp_pass', PLUGINS_RELEASES_FTP_PASS_DEFAULT ); ?>" />
-        </td>
-      </tr>
-
-      <!-- spacer -->
-      <tr>
-        <td class="spacer" colspan="2">&nbsp;</td>
-      </tr>
-       *
-       */
-      ?>
-
-      <!-- Notification enable -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <?php echo plugin_lang_get( 'notification_enable' ); ?>
-        </td>
-        <td width="70%">
-          <input type="checkbox" name="notification_enable"<?php if ( plugin_config_get( 'notification_enable', PLUGINS_RELEASES_NOTIFICATION_ENABLE_DEFAULT ) == ON ) echo ' checked="checked"' ?> />
-        </td>
-      </tr>
-
-      <!-- Notify handler -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <?php echo plugin_lang_get( 'notify_handler' ); ?>
-        </td>
-        <td width="70%">
-          <input type="checkbox" name="notify_handler"<?php if ( plugin_config_get( 'notify_handler', PLUGINS_RELEASES_NOTIFY_HANDLER_DEFAULT ) == ON ) echo ' checked="checked"' ?> />
-        </td>
-      </tr>
-
-      <!-- Notify reporter -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <?php echo plugin_lang_get( 'notify_reporter' ); ?>
-        </td>
-        <td width="70%">
-          <input type="checkbox" name="notify_reporter"<?php if ( plugin_config_get( 'notify_reporter', PLUGINS_RELEASES_NOTIFY_REPORTER_DEFAULT ) == ON ) echo ' checked="checked"' ?> />
-        </td>
-      </tr>
-
-      <!-- Notify email -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <?php echo plugin_lang_get( 'notify_email' ); ?>
-        </td>
-        <td width="70%">
-          <textarea rows="2" cols="60" name="notify_email"><?php echo plugin_config_get( 'notify_email', PLUGINS_RELEASES_NOTIFY_EMAIL_DEFAULT ) ?></textarea>
-        </td>
-      </tr>
-
-      <!-- spacer -->
-      <tr>
-        <td class="spacer" colspan="2">&nbsp;</td>
-      </tr>
-
-      <!-- Email subject -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <span class="required">*</span><?php echo plugin_lang_get( 'email_subject' ); ?> <?php //plugins_helplink_print_link( 'email_subject_help' ) ?>
-        </td>
-        <td width="70%">
-          <input type="text" name="email_subject" size="60" value="<?php echo plugin_config_get( 'email_subject', PLUGINS_RELEASES_EMAIL_SUBJECT_DEFAULT ); ?>" />
-        </td>
-      </tr>
-
-      <!-- Email template -->
-      <tr <?php echo helper_alternate_class() ?>>
-        <td class="category" width="30%">
-          <span class="required">*</span><?php echo plugin_lang_get( 'email_template' ); ?>
-        </td>
-        <td width="70%">
-          <select name="email_template">
-
-<?php
-
-$t_selected = plugin_config_get( 'email_template', PLUGINS_RELEASES_EMAIL_TEMPLATE_DEFAULT );
-
-$t_dir = config_get_global('plugin_path' ). plugin_get_current() . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-$t_dirs = array();
-$t_handle = opendir( $t_dir );
-while( ( $t_file = readdir( $t_handle ) ) !== false ) {
-    if ( preg_match( '/^[a-z0-9-_]+$/i', $t_file ) ) {
-        $t_dirs[] = $t_file;
-    }
-}
-closedir( $t_handle );
-sort( $t_dirs );
-foreach( $t_dirs as $t_dir ) {
-    echo '<option value="' . $t_dir . '"';
-    if ( $t_selected == $t_dir ) {
-        echo ' selected="selected"';
-    }
-    echo '>' . $t_dir . '</option>' . "\n";
-}
-
-?>
-          </select>
-        </td>
-      </tr>
-
-      <!-- Submit Button -->
       <tr>
         <td class="left">
           <span class="required"> * <?php echo lang_get( 'required' ) ?></span>
@@ -282,9 +147,59 @@ foreach( $t_dirs as $t_dir ) {
         </td>
       </tr>
 
+      <!-- subsection title -->
+      <tr><td colspan="2">
+        <?php echo releases_plugin_config_section_subtitle( plugin_lang_get( 'actions_on_release' ), 'fa-cog', 'releases_actions_on_release_config' ); ?>
+      </td></tr>
+
+      <!-- Create next versions on release -->
+      <tr <?php echo helper_alternate_class() ?>>
+        <td class="category" width="30%">
+          <?php echo plugin_lang_get( 'create_next_versions' ); ?>
+        </td>
+        <td width="70%">
+          <input type="checkbox" name="create_next_versions"<?php if ( plugin_config_get( 'create_next_versions', OFF ) == ON ) echo ' checked="checked"' ?> />
+        </td>
+      </tr>
+
+      <!-- Remove past unreleased versions on release -->
+      <tr <?php echo helper_alternate_class() ?>>
+        <td class="category" width="30%">
+          <?php echo plugin_lang_get( 'remove_past_unreleased_versions' ); ?>
+        </td>
+        <td width="70%">
+          <input type="checkbox" name="remove_past_unreleased_versions"<?php if ( plugin_config_get( 'remove_past_unreleased_versions', OFF ) == ON ) echo ' checked="checked"' ?> />
+        </td>
+      </tr>
+
+      <!-- Resort unreleased versions on release -->
+      <tr <?php echo helper_alternate_class() ?>>
+        <td class="category" width="30%">
+          <?php echo plugin_lang_get( 'sort_unreleased_versions' ); ?>
+        </td>
+        <td width="70%">
+          <input type="checkbox" name="sort_unreleased_versions"<?php if ( plugin_config_get( 'sort_unreleased_versions', OFF ) == ON ) echo ' checked="checked"' ?> />
+        </td>
+      </tr>
+
+      <!-- Update target versions for unresolved bugs that have target version released -->
+      <tr <?php echo helper_alternate_class() ?>>
+        <td class="category" width="30%">
+          <?php echo plugin_lang_get( 'update_unresolved_issues_tgt' ); ?>
+        </td>
+        <td width="70%">
+          <input type="checkbox" name="update_unresolved_issues_tgt"<?php if ( plugin_config_get( 'update_unresolved_issues_tgt', OFF ) == ON ) echo ' checked="checked"' ?> />
+        </td>
+      </tr>
+
     </table>
-          <input tabindex="4" type="submit" class="button" value="<?php echo lang_get( 'submit_button' ) ?>" />
-          <?php if ( $t_project_id != ALL_PROJECTS ) { ?><input type="button" class="button" value="<?php echo lang_get( 'revert_to_all_project' ) ?>" onclick="document.forms.plugins_releases.action.value='delete';document.forms.plugins_releases.submit();" /><?php } ?>
+
+    <!-- Submit Button -->
+    <table><tr><td colspan="2"> &nbsp;
+      <input tabindex="4" type="submit" class="button" value="<?php echo lang_get( 'submit_button' ) ?>" />
+      <?php if ( $t_project_id != ALL_PROJECTS ) { ?><input type="button" class="button" value="<?php echo lang_get( 'revert_to_all_project' ) ?>" onclick="document.forms.plugins_releases.action.value='delete';document.forms.plugins_releases.submit();" /><?php } ?>
+    </td></tr></table>
+
   </form>
 
 </div>

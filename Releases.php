@@ -50,8 +50,9 @@ class ReleasesPlugin extends MantisPlugin
         $t_project_id = helper_get_current_project();
         $t_show_menu_link = true;
 
-        if ($t_project_id != ALL_PROJECTS) {
-            $t_releases = version_get_all_rows($t_project_id, 1);
+        if ($t_project_id != ALL_PROJECTS) 
+        {
+            $t_releases = version_get_all_rows( $t_project_id, 1 );
             if (count($t_releases) == 0) {
                 $t_show_menu_link = false;
             }
@@ -60,9 +61,9 @@ class ReleasesPlugin extends MantisPlugin
         if ($t_show_menu_link) 
         {
             $links[] = array(
-                'title'=> plugin_lang_get("title"),
-                'url'=> plugin_page("releases", false),
-                'access_level'=> plugin_config_get('view_threshold_level', UPDATER),
+                'title'=> plugin_lang_get( "title" ),
+                'url'=> plugin_page( "releases", false ),
+                'access_level'=> plugin_config_get( 'view_threshold_level', UPDATER ),
                 'icon'=> 'fa-download'
             );
         }
@@ -129,7 +130,11 @@ class ReleasesPlugin extends MantisPlugin
             'download_requires_login'  => true,
             'view_threshold_level' => REPORTER,
             'download_threshold_level' => UPDATER,
-            'upload_threshold_level' => DEVELOPER
+            'upload_threshold_level' => DEVELOPER,
+            'create_next_versions' => false,
+            'remove_past_unreleased_versions' => false,
+            'sort_unreleased_versions' => false,
+            'update_unresolved_issues_tgt' => false
         );
     }
 

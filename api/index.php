@@ -30,13 +30,16 @@ if( ON == config_get_global( 'show_detailed_errors' ) ) {
 }
 
 $t_container = new \Slim\Container( $t_config );
-$t_container['errorHandler'] = function( $p_container ) {
-	return function( $p_request, $p_response, $p_exception ) use ( $p_container ) {
+$t_container['errorHandler'] = function( $p_container ) 
+{
+	return function( $p_request, $p_response, $p_exception ) use ( $p_container ) 
+	{
 		$t_data = array(
 			'message' => $p_exception->getMessage(),
 		);
 
-		if( is_a( $p_exception, 'Mantis\Exceptions\MantisException' ) ) {
+		if( is_a( $p_exception, 'Mantis\Exceptions\MantisException' ) ) 
+		{
 			global $g_error_parameters;
 			$g_error_parameters =  $p_exception->getParams();
 			$t_data['code'] = $p_exception->getCode();
@@ -46,7 +49,8 @@ $t_container['errorHandler'] = function( $p_container ) {
 			return $p_response->withStatus( $t_result->status_code, $t_result->fault_string )->withJson( $t_data );
 		}
 
-		if( is_a( $p_exception, 'Mantis\Exceptions\LegacyApiFaultException' ) ) {
+		if( is_a( $p_exception, 'Mantis\Exceptions\LegacyApiFaultException' ) ) 
+		{
 			return $p_response->withStatus( $p_exception->getCode(), $p_exception->getMessage() )->withJson( $t_data );
 		}
 
@@ -55,28 +59,29 @@ $t_container['errorHandler'] = function( $p_container ) {
 		error_log( $t_error_to_log );
 
 		$t_settings = $p_container->get('settings');
-		if( $t_settings['displayErrorDetails'] ) {
-			$p_response = $p_response->withJson($t_data);
+		if( $t_settings['displayErrorDetails'] ) 
+		{
+			$p_response = $p_response->withJson( $t_data );
 		}
 
 		return $p_response->withStatus( HTTP_STATUS_INTERNAL_SERVER_ERROR );
 	};
 };
 
-$g_app = new \Slim\App($t_container);
+$g_app = new \Slim\App( $t_container );
 
 # Add middleware - executed in reverse order of appearing here.
-$g_app->add(new ApiEnabledMiddleware());
-$g_app->add(new AuthMiddleware());
-$g_app->add(new VersionMiddleware());
-$g_app->add(new OfflineMiddleware());
-$g_app->add(new CacheMiddleware());
+$g_app->add( new ApiEnabledMiddleware() );
+$g_app->add( new AuthMiddleware() );
+$g_app->add( new VersionMiddleware() );
+$g_app->add( new OfflineMiddleware() );
+$g_app->add( new CacheMiddleware() );
 
-require_once($t_restlocal_dir . 'releases.php' );
+require_once( $t_restlocal_dir . 'releases.php' );
 
-event_signal('EVENT_REST_API_ROUTES', array(array('app' => $g_app)));
+event_signal( 'EVENT_REST_API_ROUTES', array( array( 'app' => $g_app ) ) );
 
-plugin_push_current('Releases');
+plugin_push_current( 'Releases' );
 $g_app->run();
 
 plugin_pop_current();

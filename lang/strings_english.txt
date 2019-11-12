@@ -39,11 +39,17 @@ $s_plugin_Releases_notify_reporter = 'Notify Reporter';
 $s_plugin_Releases_notify_email = 'Emails (separated by \',\')';
 $s_plugin_Releases_email_template = 'Email Template';
 $s_plugin_Releases_email_subject = 'Email Subject';
+$s_plugin_Releases_user_access = 'User Access';
+$s_plugin_Releases_file_upload = 'File Upload';
 $s_plugin_Releases_download_requires_login = 'Require Login for Download';
 $s_plugin_Releases_max_file_ini_upload = 'upload_max_size in php.ini';
 $s_plugin_Releases_max_file_ini_post   = 'post_max_size in php.ini';
 $s_plugin_Releases_max_file_mantis_cfg = 'Mantis max_file_size';
-
+$s_plugin_Releases_actions_on_release = 'Actions on Release';
+$s_plugin_Releases_create_next_versions = 'Create Next Versions';
+$s_plugin_Releases_remove_past_unreleased_versions = 'Remove Past Unreleased Versions';
+$s_plugin_Releases_update_unresolved_issues_tgt = 'Update Target Version for Unresolved Issues';
+$s_plugin_Releases_sort_unreleased_versions = 'Resort Unreleased Versions';
 
 /* Releases page */
 $s_plugin_Releases_confirm_delete_file = 'Are you sure you want delete this file?';
