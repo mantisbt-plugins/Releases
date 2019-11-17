@@ -1,5 +1,16 @@
 # RELEASES CHANGE LOG
 
+## Version 1.2.0 (November 17th, 2019)
+
+### Features
+
+- add support for several post-release actions:
+
+	create_next_versions
+	remove_past_unreleased_versions
+	sort_unreleased_versions
+	update_unresolved_issues_tgt
+
 ## Version 1.1.9 (August 17th, 2019)
 
 ### Bug Fixes
