@@ -1,5 +1,19 @@
 # RELEASES CHANGE LOG
 
+## Version 1.3.0 (December 13th, 2019)
+
+### Documentation
+
+- **Readme:** add configuration section
+
+### Features
+
+- add new endpoint for retrieving a version changelog.
+
+	The following endpoint has been added to achieve this functionality:
+
+	    /releases/{project}/{changelog/{version}
+
 ## Version 1.2.0 (November 17th, 2019)
 
 ### Features
