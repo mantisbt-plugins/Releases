@@ -10,18 +10,23 @@
 [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=plugin.php?page=Releases/releases)
 [![MantisBT version next](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/next)](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=plugin.php?page=Releases/releases)
 
-- [Releases MantisBT Plugin](#Releases-MantisBT-Plugin)
-  - [Description](#Description)
-  - [Installation](#Installation)
-  - [Issues and Feature Requests](#Issues-and-Feature-Requests)
-  - [REST API](#REST-API)
-    - [GET: /plugins/Releases/api/releases/{project}/{id}](#GET-pluginsReleasesapireleasesprojectid)
-    - [POST: /plugins/Releases/api/releases/{project}](#POST-pluginsReleasesapireleasesproject)
-    - [PUT: /plugins/Releases/api/releases/{project}/{id}](#PUT-pluginsReleasesapireleasesprojectid)
-    - [DELETE: /plugins/Releases/api/releases/{project}/{id}](#DELETE-pluginsReleasesapireleasesprojectid)
-  - [Screenshots](#Screenshots)
-    - [Plugin Releases Screen](#Plugin-Releases-Screen)
-  - [Authors of Original Code Base](#Authors-of-Original-Code-Base)
+- [Releases MantisBT Plugin](#releases-mantisbt-plugin)
+  - [Description](#description)
+  - [Installation](#installation)
+  - [Issues and Feature Requests](#issues-and-feature-requests)
+  - [Configuration](#configuration)
+    - [Option - Create Next Versions](#option---create-next-versions)
+    - [Option - Remove past unreleased versions](#option---remove-past-unreleased-versions)
+    - [Option - Resort Unreleased Versions](#option---resort-unreleased-versions)
+    - [Option - Update Target Version for Unresolved Issues](#option---update-target-version-for-unresolved-issues)
+  - [REST API](#rest-api)
+    - [GET: /plugins/Releases/api/releases/{project}/{id}](#get-pluginsreleasesapireleasesprojectid)
+    - [POST: /plugins/Releases/api/releases/{project}](#post-pluginsreleasesapireleasesproject)
+    - [PUT: /plugins/Releases/api/releases/{project}/{id}](#put-pluginsreleasesapireleasesprojectid)
+    - [DELETE: /plugins/Releases/api/releases/{project}/{id}](#delete-pluginsreleasesapireleasesprojectid)
+  - [Screenshots](#screenshots)
+    - [Plugin Releases Screen](#plugin-releases-screen)
+  - [Authors of Original Code Base](#authors-of-original-code-base)
 
 ## Description
 
@@ -47,6 +52,39 @@ For Apache configuration, see the example Location directive found in api/apache
 ## Issues and Feature Requests
 
 Issues and requests should be submitted on my [MantisBT](https://app1.spmeesseman.com/projects/set_project.php?project=Releases&make_default=no&ref=bug_report_page.php) site.
+
+## Configuration
+
+The *Disk Directory* must be set prior to making any releases, and this directory must exist.  The web server must have write access to this directory.
+
+The following options can be turned on and off in the *Releases* plugin configuration:
+
+1. Create next versions
+2. Remove past unreleased versions
+3. Resort Unreleased Versions
+4. Update Target Version for Unresolved Issues
+
+All four options default to **OFF**.
+
+### Option - Create Next Versions
+
+With this option **ON** when a release is made, the next patch, minor, and major releases will be created if they do not exist already.  TImestamps for the sake of ordering are set as follows:
+
+- Patch 7 days following the current date
+- Minor 30 days following the current date
+- Major 90 days following the current date
+
+### Option - Remove past unreleased versions
+
+With this option **ON** when a release is made, all previous unreleased versions are removed.  The PHP function *version_compare* is used to determine what is a "previous" release.
+
+### Option - Resort Unreleased Versions
+
+With this option **ON** when a release is made, all unreleased versions will be resorted according to timestamp.
+
+### Option - Update Target Version for Unresolved Issues
+
+With this option **ON** when a release is made, the target version will be updated for all unresolved issues that have their target version set to the released version.  The new target version will be the next minor version, if it exists.  If it does not, the target verison is updated to the next patch, and if that does not exist, to the next major version.
 
 ## REST API
 
