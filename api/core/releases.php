@@ -11,17 +11,17 @@ $g_app->group( '/releases', function() use ( $g_app )
 	$g_app->get( '/{project}/changelog/{version}', 'releases_get_changelog' );
 	$g_app->get( '/{project}/changelog/{version}/', 'releases_get_changelog' );
 
-	$g_app->get( '/{project}/{id}', 'releases_get' );
-	$g_app->get( '/{project}/{id}/', 'releases_get' );
+	$g_app->get( '/{project}', 'releases_get' );
+	$g_app->get( '/{project}/', 'releases_get' );
 
 	$g_app->post( '/{project}', 'release_add' );
 	$g_app->post( '/{project}/', 'release_add' );
 
-	$g_app->put( '/{project}/{id}', 'release_update' );
-	$g_app->put( '/{project}/{id}/', 'release_update' );
+	$g_app->put( '/{project}', 'release_update' );
+	$g_app->put( '/{project}/', 'release_update' );
 
-	$g_app->delete( '/{project}/{id}', 'release_delete' );
-	$g_app->delete( '/{project}/{id}/', 'release_delete' );
+	$g_app->delete( '/{project}', 'release_delete' );
+	$g_app->delete( '/{project}/', 'release_delete' );
 });
 
 
@@ -40,16 +40,6 @@ function releases_get(\Slim\Http\Request $p_request, \Slim\Http\Response $p_resp
 		if ( $t_project_id == null) {
 			return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "The field 'project' is invalid." );
 		}
-	}
-
-	$t_release_id = isset( $p_args['id']) ? $p_args['id'] : $p_request->getParam( 'id' );
-	if (is_blank( $t_release_id) ) {
-		return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "Mandatory field 'id' is missing." );
-	}
-
-	$t_release_id = (int)$t_release_id;
-	if ( $t_release_id < 1) {
-		return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "Invalid release id." );
 	}
 
 	$t_user_id = auth_get_current_user_id();
