@@ -1,5 +1,11 @@
 # RELEASES CHANGE LOG
 
+## Version 1.3.1 (December 14th, 2019)
+
+### Bug Fixes
+
+- the 'get releases' endpoint is broken
+
 ## Version 1.3.0 (December 13th, 2019)
 
 ### Documentation
