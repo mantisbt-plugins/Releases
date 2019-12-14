@@ -8,6 +8,9 @@ require_once( 'releases_email_api.php' );
 
 $g_app->group( '/releases', function() use ( $g_app ) 
 {
+	$g_app->get( '/{project}/changelog/{version}', 'releases_get_changelog' );
+	$g_app->get( '/{project}/changelog/{version}/', 'releases_get_changelog' );
+
 	$g_app->get( '/{project}/{id}', 'releases_get' );
 	$g_app->get( '/{project}/{id}/', 'releases_get' );
 
@@ -73,6 +76,57 @@ function releases_get(\Slim\Http\Request $p_request, \Slim\Http\Response $p_resp
 	$t_result = array( 'projects' => $t_projects);
 
 	return $p_response->withStatus(HTTP_STATUS_SUCCESS)->withJson( $t_result);
+}
+
+
+function releases_get_changelog(\Slim\Http\Request $p_request, \Slim\Http\Response $p_response, array $p_args) 
+{
+	$t_project_id = null;
+	#
+	# Ensure valid project was provided by client
+	#
+	$p_project = isset( $p_args['project']) ? $p_args['project'] : $p_request->getParam( 'project' );
+	if (is_blank( $p_project) ) {
+		return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "Mandatory field 'project_id' is missing." );
+	} 
+	else {
+		$t_project_id = project_get_id_by_name( $p_project, false );
+		if ( $t_project_id == null) {
+			return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "The field 'project' is invalid." );
+		}
+	}
+
+	#
+	# Get version provided by client
+	#
+	$p_version = isset( $p_args['version']) ? $p_args['version'] : $p_request->getParam( 'version' );
+	if (is_blank( $p_version) ) {
+		return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "Mandatory field 'project_id' is missing." );
+	} 
+	else {
+		$t_version_id = version_get_id( $p_version, $t_project_id );
+		if ( $t_version_id == null) {
+			return $p_response->withStatus( HTTP_STATUS_BAD_REQUEST, "The field 'project' is invalid." );
+		}
+	}
+
+	#
+	# Get the database table for 'release'
+	#
+	$dbTable = plugin_table( 'release' );
+
+	#
+	# Check to make sure a release for this version does not already exist
+	# If it doesnt, then create it, if it does, get the release id, we will still add assets
+	# to the existing release next
+	#
+	$query = "SELECT description FROM $dbTable WHERE version_id=".$t_version_id;
+    $result = db_query( $query);
+	$t_changelog = db_result( $result );
+
+	$t_result = array( 'changelog' => $t_changelog);
+
+	return $p_response->withStatus( HTTP_STATUS_SUCCESS )->withJson( $t_result );
 }
 
 
