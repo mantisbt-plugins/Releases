@@ -348,6 +348,9 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 		if ( !$p_dry_run ) {
 			$t_version_id = version_add( $t_project_id, $p_version, VERSION_RELEASED );
 		}
+		else {
+			$t_version_id = 0;
+		}
 		$rtnMessage = $rtnMessage . "Version added, $p_version to 'released'\n";
 	}
 	else 
