@@ -26,6 +26,7 @@
     - [DELETE: /plugins/Releases/api/releases/{project}/{id}](#delete-pluginsreleasesapireleasesprojectid)
   - [Screenshots](#screenshots)
     - [Plugin Releases Screen](#plugin-releases-screen)
+  - [Jenkins Integration](#jenkins-integration)
   - [Authors of Original Code Base](#authors-of-original-code-base)
 
 ## Description
@@ -158,6 +159,10 @@ Not supported in v1.x
 ### Plugin Releases Screen
 
 ![Release Page](res/releases.png "Plugin releases screen")
+
+## Jenkins Integration
+
+Integrates with the [jenkins-mantisbt](https://github.com/spmeesseman/jenkins-manstisbt) Plugin.
 
 ## Authors of Original Code Base
 
