@@ -1,5 +1,16 @@
 # RELEASES CHANGE LOG
 
+## Version 1.3.2 (June 27th, 2021)
+
+### Documentation
+
+- **README:** add section link for jenkins integration
+- **README:** remove personal mantisbt bugs page ref
+
+### Bug Fixes
+
+- **Dry Run:** dry run should return an id.  Return 0.
+
 ## Version 1.3.1 (December 14th, 2019)
 
 ### Bug Fixes
@@ -169,4 +180,3 @@
 ### Chores
 
 - Initial release
-
