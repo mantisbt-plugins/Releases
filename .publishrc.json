@@ -10,7 +10,7 @@
         "cmd /c xcopy templates\\* build\\Releases\\templates /s /i /y",
         "cmd /c copy /Y LICENSE.txt build\\Releases",
         "cmd /c copy /Y Releases.php build\\Releases",
-        "Compress-Archive -Path build\\Releases -Update -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
+        "powershell Compress-Archive -Path build\\Releases -Update -CompressionLevel Optimal -DestinationPath build\\Releases.zip",
         "tar -C build -czf build/Releases.tgz Releases",
         "cmd /c rmdir /S /Q build\\Releases"
     ],
@@ -25,6 +25,5 @@
     "repoType":          "git",
     "repo":              "https://github.com/mantisbt-plugins/Releases.git",
     "skipVersionEdits":  "Y",
-    "testEmailRecip":    "spmeesseman@gmail.com",
     "textEditor":        "notepad"
 }
