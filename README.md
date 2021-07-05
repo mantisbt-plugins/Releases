@@ -13,6 +13,7 @@
 - [Releases MantisBT Plugin](#releases-mantisbt-plugin)
   - [Description](#description)
   - [Installation](#installation)
+  - [Web Server Configuration](#web-server-configuration)
   - [Configuration](#configuration)
     - [Option - Create Next Versions](#option---create-next-versions)
     - [Option - Remove past unreleased versions](#option---remove-past-unreleased-versions)
@@ -46,6 +47,8 @@ Extract the release archive to the MantisBT installations plugins folder:
 Ensure to use the latest released version number in the download url: [![MantisBT version current](https://app1.spmeesseman.com/projects/plugins/ApiExtend/api/versionbadge/Releases/current)](https://app1.spmeesseman.com/projects) (version badge available via the [ApiExtend Plugin](https://github.com/mantisbt-plugins/ApiExtend))
 
 Install the plugin using the default installation procedure for a MantisBT plugin in `Manage -> Plugins`.
+
+## Web Server Configuration
 
 For Apache configuration, see the example Location directive found in api/apache2-site-config
 
