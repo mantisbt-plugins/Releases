@@ -1,5 +1,15 @@
 # RELEASES CHANGE LOG
 
+## Version 1.3.3 (July 8th, 2021)
+
+### Documentation
+
+- **Readme:** add webserver setup section
+
+### Refactoring
+
+- pre-release versions should not perform any version and ticket shuffling
+
 ## Version 1.3.2 (June 27th, 2021)
 
 ### Documentation
