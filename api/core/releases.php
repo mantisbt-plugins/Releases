@@ -369,40 +369,48 @@ function release_add(\Slim\Http\Request $p_request, \Slim\Http\Response $p_respo
 	}
 
 	#
-	# Clear cache since version_api doesnt do it (as of 2.21.1)
+	# Do some release creation/shuffling if this is not a pre-release
 	#
-	releases_clear_version_cache();
+	if (strpos($p_version, '-') === false)
+	{   #
+		# Clear cache since version_api doesnt do it (as of 2.21.1)
+		#
+		releases_clear_version_cache();
 
-	#
-	# Create next patch, minor, and major versions if they do not exist
-	#
-	if ( plugin_config_get( 'create_next_versions', 0, false, null, $t_project_id ) == 1 ) 
-	{
-		releases_create_next_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		#
+		# Create next patch, minor, and major versions if they do not exist
+		#
+		if ( plugin_config_get( 'create_next_versions', 0, false, null, $t_project_id ) == 1 ) 
+		{
+			releases_create_next_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		}
+
+		#
+		# Move unresolved issues with target version = to this released version to next minor version
+		#
+		if ( plugin_config_get( 'update_unresolved_issues_tgt', 0, false, null, $t_project_id ) == 1 ) 
+		{
+			releases_update_unresolved_issues_tgt( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		}
+
+		#
+		# Remove past unreleased versions based on version comparison
+		#
+		if ( plugin_config_get( 'remove_past_unreleased_versions', 0, false, null, $t_project_id ) == 1 ) 
+		{
+			releases_remove_past_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		}
+
+		#
+		# Go through and re-order versions and reset date timestamps
+		#
+		if ( plugin_config_get( 'sort_unreleased_versions', 0, false, null, $t_project_id ) == 1 ) 
+		{
+			releases_sort_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+		}
 	}
-
-	#
-	# Move unresolved issues with target version = to this released version to next minor version
-	#
-	if ( plugin_config_get( 'update_unresolved_issues_tgt', 0, false, null, $t_project_id ) == 1 ) 
-	{
-		releases_update_unresolved_issues_tgt( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
-	}
-
-	#
-	# Remove past unreleased versions based on version comparison
-	#
-	if ( plugin_config_get( 'remove_past_unreleased_versions', 0, false, null, $t_project_id ) == 1 ) 
-	{
-		releases_remove_past_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
-	}
-
-	#
-	# Go through and re-order versions and reset date timestamps
-	#
-	if ( plugin_config_get( 'sort_unreleased_versions', 0, false, null, $t_project_id ) == 1 ) 
-	{
-		releases_sort_unreleased_versions( $p_version, $t_project_id, $p_dry_run, $rtnMessage );
+	else {
+		$rtnMessage = $rtnMessage . "Pre-release: No version shuffling done.\n";
 	}
 
 	#
